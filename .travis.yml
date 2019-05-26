@@ -7,5 +7,5 @@ python:
 
 before_script: pip install docker-compose
 
-scripts:
+script:
     - docker-compose run app sh -c "python nanage.py test && flake8"
