@@ -20,4 +20,4 @@ class Repository(models.Model):
     star_count = models.IntegerField(null=False)
 
     def __str__(self):
-        return self.title
+        return self.name_owner
