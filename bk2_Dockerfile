@@ -1,0 +1,18 @@
+FROM python:3.7.3-slim
+MAINTAINER hayatek
+
+ENV PYTHONUNBUFFERED 1
+
+COPY ./requirements.txt /requirements.txt
+RUN apt-get update && apt-get install -y python3 \
+postgresql-client postgresql-dev
+RUN pip3 install --upgrade pip
+RUN pip3 install -r /requirements.txt
+RUN apk del .tmp-build-deps
+
+RUN mkdir /app
+WORKDIR /app
+COPY ./app /app
+
+RUN adduser -D user
+USER user
