@@ -23,10 +23,11 @@ class GraphQL:
     def get_result(self):
         query = '''
             query($query_string:String!){
-                search( query:$query_string type: REPOSITORY, first: 1){
+                search( query:$query_string type: REPOSITORY, first: 3){
                 edges {
                     node {
                     ... on Repository {
+                    databaseId
                     nameWithOwner
                     owner{
                     avatarUrl
@@ -51,4 +52,4 @@ class GraphQL:
         }
 
         result = self.run_query(query, variables)  # execute query
-        print(result)
+        return result
