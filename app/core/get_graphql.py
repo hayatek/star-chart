@@ -1,5 +1,5 @@
 import requests
-from app.local_settings import *
+from config.local_settings import *
 
 
 class GetGraphql:
