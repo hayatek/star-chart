@@ -4,8 +4,8 @@ MAINTAINER hayatek
 ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
-RUN apk --update-cache add python3-dev postgresql-client libstdc++ \
-    gcc g++ gfortran make musl openblas-dev \
+RUN apk --update-cache add python3-dev postgresql-client \
+    gcc g++ make gfortran openblas-dev linux-headers \
     linux-headers postgresql-dev
 RUN pip3 install --upgrade pip
 RUN pip3 uninstall pandas
