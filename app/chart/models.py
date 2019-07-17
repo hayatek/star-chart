@@ -16,4 +16,4 @@ class Combination(models.Model):
     access_count = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.repository1
+        return self.database_id1

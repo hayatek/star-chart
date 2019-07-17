@@ -1,0 +1,16 @@
+body {
+  font-family: "Open Sans", "Noto Sans Japanese", Avenir, "Helvetica Neue",
+  Helvetica, Arial, Verdana, "ヒラギノ角ゴ Pro W3",
+  "Hiragino Kaku Gothic Pro", "Meiryo UI", "メイリオ", Meiryo,
+  "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "ＭＳ Ｐゴシック",
+  "MS PGothic", sans-serif;
+}
+
+.masthead {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
