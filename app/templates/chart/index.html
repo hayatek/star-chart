@@ -3,46 +3,34 @@
 {% block page_title %}home{% endblock %}
 
 {% block content %}
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <a class="navbar-brand" href="#">StarChart</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Ranking</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
 <header class="masthead">
   <div class="container h-100">
     <div class="row h-100 align-items-center">
       <div class="col-12 text-center">
         <h3 class="font-weight-light">Githubリポジトリのスター数を比較してみよう。</h3>
-        <p class="lead">StarChartはスター数が10,000以上のリポジトリを対象にしたスター数比較アプリです。</p>
+        <p class="lead">スター数10,000以上のリポジトリが対象です。</p>
         <div class="d-flex justify-content-center align-items-center">
           <div class="row">
-              <form>
-                  <div class="form-group">
-                    <label for="repository1">リポジトリ1</label>
-                    <input type="text" class="form-control" id="repository1" placeholder="リポジトリを入力">
+              <form method="POST">
+                  {% csrf_token %}
+                  {% for field in form %}
+                    <div class="form-group">
+                        <label class="control-label" for="{{ field.name }}">
+                            {{ field.label }}</label>
+                                  <input type="" class="form-control"
+                                         name="{{ field.name }}"
+                                         id="{{ field.name }}">
+                    </div>
+                    {% if field.errors %}
+                        <p class="red message" id="{{ field.name }}">
+                            {{ field.errors.0 }}</p>
+                    {% endif %}
+                  {% endfor %}
+                  <div class="form-group text-center" style="padding:20px 0">
+                      <input type="submit" value="スター数を比較する" class="btn btn-outline-primary btn-sm"/>
                   </div>
-                  <div class="form-group">
-                    <label for="repository2">リポジトリ2</label>
-                    <input type="text" class="form-control" id="repository2" placeholder="リポジトリを入力">
-                  </div>
-                  <div class="form-group">
-                    <label for="repository3">リポジトリ3</label>
-                    <input type="text" class="form-control" id="repository3" placeholder="リポジトリを入力">
-                  </div>
-                  <button type="submit" class="btn btn-primary">スター数を確認</button>
               </form>
+
           </div>
         </div>
       </div>
