@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block page_title %}chart{% endblock %}
+
+{% block content %}
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center width:300px; height:300px;">
+        <h3 class="font-weight-light">chart.jsのページ</h3>
+
+            <canvas id="myChart"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+            <link href="style.css" rel="stylesheet">
+            <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var labels = ["{{ dict.labels.0 }}",
+                          "{{ dict.labels.1 }}",
+                          "{{ dict.labels.2 }}"]
+            var defaultData = ["{{ dict.data.0 }}",
+                               "{{ dict.data.1 }}",
+                               "{{ dict.data.2 }}"]
+            var myLineChart = new Chart(ctx, {
+              type: 'horizontalBar',
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: 'Repositoryのスター数',
+                    data: defaultData,
+                    backgroundColor: ['#1BC98D','#9F85FF','#1A97C6'],
+                    borderColor: '#ffffff'
+                  },
+                ],
+              },
+              options: {
+                data: {
+                      labels: {
+                          fontColor: '#ffffff'
+                      }
+                },
+                title: {
+                  display: true,
+                  fontColor: '#ffffff'
+                },
+                scales: {
+                  xAxes: [{
+                    ticks: {
+                      suggestedMax: 40000,
+                      suggestedMin: 0,
+                      stepSize: 10000,
+                      fontColor: '#000',
+                    }
+                  }],
+                  yAxes: [{
+                    ticks: {
+                        fontColor: '#000'
+                      }
+                  }]
+                },
+              }
+            });
+            </script>
+            <a href="{% url 'chart:chart_new' %}" class="btn btn-outline-primary btn-sm">別の条件で比較する</a>
+          </div>
+      </div>
+    </div>
+</header>
+
+<!-- Page Content -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="font-weight-light">Page Content</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+  </div>
+</section>
+{% endblock content%}
