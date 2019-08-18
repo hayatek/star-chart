@@ -7,8 +7,12 @@
   <div class="container h-100">
     <div class="row h-100 align-items-center">
       <div class="col-12 text-center">
-        <h3 class="font-weight-light">Githubリポジトリのスター数を比較してみよう。</h3>
-        <p class="lead">スター数10,000以上のリポジトリが対象です。</p>
+        <div class="jumbotron">
+        <h4 class="font-weight-light">Githubリポジトリのスター数を比較してみよう。</h4>
+        <div class="lastupdate">
+            <i class="material-icons calendar">calendar_today</i>
+            <p>Last Update:{{ last_fetched_date }}</p>
+        </div>
         <div class="d-flex justify-content-center align-items-center">
           <div class="row">
               <form method="POST">
@@ -19,19 +23,20 @@
                             {{ field.label }}</label>
                                   <input type="" class="form-control"
                                          name="{{ field.name }}"
-                                         id="{{ field.name }}">
+                                         id="{{ field.name }}"
+                                         placeholder="{{ field.help_text }}">
                     </div>
                     {% if field.errors %}
-                        <p class="red message" id="{{ field.name }}">
+                        <p class="red-message" id="{{ field.name }}">
                             {{ field.errors.0 }}</p>
                     {% endif %}
                   {% endfor %}
-                  <div class="form-group text-center" style="padding:20px 0">
-                      <input type="submit" value="スター数を比較する" class="btn btn-outline-primary btn-sm"/>
+                  <div class="form-group text-center">
+                  <input type="submit" value="スター数を比較する" class="btn btn-primary btn-lg"/>
                   </div>
               </form>
-
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -39,10 +44,40 @@
 </header>
 
 <!-- Page Content -->
-<section class="py-5">
-  <div class="container">
-    <h2 class="font-weight-light">Page Content</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
-  </div>
+<section class="ranking" id=access>
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 text-center">
+            <div class="access-ranking">
+                <i class="material-icons access">bar_chart</i>
+                <h4 class="font-weight-light">Access Ranking</h4>
+            </div>
+                {% for field in access %}
+                <div class="card">
+                  <div class="card-body">
+                    <img src={{ field.avatar_url1 }}><BR>
+                    <span>{{ field.name_owner1 }}</span><BR>
+                    {% if field.name_owner2 %}
+                    <img src={{ field.avatar_url2 }}><BR>
+                    <span>{{ field.name_owner2 }}</span><BR>
+                    {% endif %}
+                    {% if field.name_owner3 %}
+                    <img src={{ field.avatar_url3 }}><BR>
+                    <span>{{ field.name_owner3 }}</span><BR>
+                    {% endif %}
+                    <div class="btn-card">
+                        <a href={% url 'chart:chart_detail' field.id %} class="btn btn-primary btn-sm">スター数を比較する</a>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <i class="material-icons eye">remove_red_eye</i>
+                    <span>Watch:</span>
+                    <span>{{ field.access_count }}</span>
+                  </div>
+                 </div>
+                {% endfor %}
+            </div>
+        </div>
+      </div>
 </section>
 {% endblock %}
