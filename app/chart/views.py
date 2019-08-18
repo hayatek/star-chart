@@ -6,44 +6,28 @@ from django.utils import timezone
 
 
 def chart_new(request):
+    access = Combination.objects.order_by('-access_count')[:10]
+    last_fetched_date = Repository.objects.latest('fetched_at').fetched_at
+
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            repository_1_wk = form.cleaned_data['repository_1']
-            repository_2_wk = form.cleaned_data['repository_2']
-            repository_3_wk = form.cleaned_data['repository_3']
-
-            query_set_1 = get_database_id(repository_1_wk)
-
-            if repository_2_wk:
-                query_set_2 = get_database_id(repository_2_wk)
-            else:
-                query_set_2 = ''
-
-            if repository_3_wk:
-                query_set_3 = get_database_id(repository_3_wk)
-            else:
-                query_set_3 = ''
-
             id_list = []
-            if query_set_2 == '' and query_set_3 == '':
-                id_list = [query_set_1[0].database_id,
-                           0,
-                           0]
-            elif query_set_2 == '' and query_set_3 != '':
-                id_list = [query_set_1[0].database_id,
-                           0,
-                           query_set_3[0].database_id]
-            elif query_set_2 != '' and query_set_3 == '':
-                id_list = [query_set_1[0].database_id,
-                           query_set_2[0].database_id,
-                           0]
-            elif query_set_2 != '' and query_set_3 != '':
-                id_list = [query_set_1[0].database_id,
-                           query_set_2[0].database_id,
-                           query_set_3[0].database_id]
 
-            #print('id_list=', id_list)
+            id_list.append(get_database_id(
+                form.cleaned_data['repository_1'])[0].database_id)
+
+            if form.cleaned_data['repository_2']:
+                id_list.append(get_database_id(
+                    form.cleaned_data['repository_2'])[0].database_id)
+            else:
+                id_list.append(0)
+
+            if form.cleaned_data['repository_3']:
+                id_list.append(get_database_id(
+                    form.cleaned_data['repository_3'])[0].database_id)
+            else:
+                id_list.append(0)
 
             id_list.sort(reverse=True)
 
@@ -51,20 +35,26 @@ def chart_new(request):
                 database_id1=id_list[0],
                 database_id2=id_list[1],
                 database_id3=id_list[2]).exists():
-                combination_query = Combination.objects.get(
-                                        database_id1=id_list[0],
-                                        database_id2=id_list[1],
-                                        database_id3=id_list[2])
-
-                combination_query.updated_at = timezone.now()
-                combination_query.access_count += 1
-                combination_query.save()
-                #print('pk=',combination_query.pk)
+                pass
             else:
+                Comb_repo_list = []
+                Comb_repo_list = get_repository_info(id_list)
+                for i in range(3):
+                    if id_list[i] == 0:
+                        Comb_repo_list.append( \
+                            {'name_owner': '', 'avatar_url': ''})
+
+
                 Combination.objects.create(
-                    database_id1=id_list[0],
-                    database_id2=id_list[1],
-                    database_id3=id_list[2],
+                    database_id1 = id_list[0],
+                    name_owner1 = Comb_repo_list[0]['name_owner'],
+                    avatar_url1 = Comb_repo_list[0]['avatar_url'],
+                    database_id2 = id_list[1],
+                    name_owner2 = Comb_repo_list[1]['name_owner'],
+                    avatar_url2 = Comb_repo_list[1]['avatar_url'],
+                    database_id3 =id_list[2],
+                    name_owner3 = Comb_repo_list[2]['name_owner'],
+                    avatar_url3 = Comb_repo_list[2]['avatar_url'],
                     created_at = timezone.now(),
                     updated_at = timezone.now(),
                     access_count = 1
@@ -79,25 +69,27 @@ def chart_new(request):
             return redirect('chart:chart_detail', pk=combination_pk)
     else:
         form = PostForm()
-    return render(request, 'chart/index.html', {'form': form})
+    return render(request, 'chart/index.html', \
+         {'form': form,
+          'access' : access,
+          'last_fetched_date' : last_fetched_date})
 
 
 def get_database_id(repository_name):
     result = Repository.objects.filter(name_owner__icontains=repository_name)
     return result
 
-def get_repository_info(list):
+def get_repository_info(id_list):
     result_repository_info = []
-    for i in range(3):
-        if Repository.objects.filter(database_id=list[i]).exists():
-            result_repository_info.append(Repository.objects.filter(
-                                                    database_id=list[i]))
-        else:
-            result_repository_info.append('')
-        print('result_repository_info=', result_repository_info)
+    for item in id_list:
+        if Repository.objects.filter(database_id=item).exists():
+            result_repository_info.append(Repository.objects.values().
+            filter(database_id=item)[0])
+        #print('result_repository_info=', result_repository_info)
     return result_repository_info
 
 def chart_detail(request, pk):
+    last_fetched_date = Repository.objects.latest('fetched_at').fetched_at
     post = Combination.objects.get(pk=pk)
     id_list = []
     id_list = [post.database_id1,
@@ -106,25 +98,26 @@ def chart_detail(request, pk):
 
     id_list.sort(reverse=True)
 
-    list_name_owner = []
-    list_star_count = []
+    if Combination.objects.filter(
+        database_id1=id_list[0],
+        database_id2=id_list[1],
+        database_id3=id_list[2]).exists():
+            combination_query = Combination.objects.get(
+                                    database_id1=id_list[0],
+                                    database_id2=id_list[1],
+                                    database_id3=id_list[2])
+
+            combination_query.updated_at = timezone.now()
+            combination_query.access_count += 1
+            combination_query.save()
+
     repository_list = []
+    dict = []
 
     repository_list = get_repository_info(id_list)
-    #print('前repository_list', repository_list)
 
-    for item in repository_list:
-        if item != '':
-            list_name_owner.append(item[0].name_owner)
-            list_star_count.append(item[0].star_count)
+    dict = sorted(repository_list,
+                        key=lambda x:x['star_count'], reverse=True)
 
-    #print('後repository_list', repository_list)
-
-    print('list_name_owner=', list_name_owner)
-    print('list_star_count=', list_star_count)
-    dict = {}
-    dict = {
-            "labels": list_name_owner,
-            "data": list_star_count
-            }
-    return render(request, 'chart/chart.html', {'dict': dict})
+    return render(request, 'chart/chart.html',
+                {'dict': dict,'last_fetched_date' : last_fetched_date})

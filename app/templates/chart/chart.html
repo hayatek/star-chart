@@ -3,23 +3,27 @@
 {% block page_title %}chart{% endblock %}
 
 {% block content %}
-<header class="masthead">
+<div class="chart-container">
   <div class="container h-100">
     <div class="row h-100 align-items-center">
-      <div class="col-12 text-center width:300px; height:300px;">
-        <h3 class="font-weight-light">chart.jsのページ</h3>
-
+      <div class="col-12 text-center">
+        <div class="jumbotron">
+        <h4 class="font-weight-light">Githubのスター数</h4>
+        <div class="lastupdate">
+            <i class="material-icons calendar">calendar_today</i>
+            <p>Last Update:{{ last_fetched_date }}</p>
+        </div>
+          <div class="chartjs-container">
             <canvas id="myChart"></canvas>
             <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-            <link href="style.css" rel="stylesheet">
             <script>
             var ctx = document.getElementById('myChart').getContext('2d');
-            var labels = ["{{ dict.labels.0 }}",
-                          "{{ dict.labels.1 }}",
-                          "{{ dict.labels.2 }}"]
-            var defaultData = ["{{ dict.data.0 }}",
-                               "{{ dict.data.1 }}",
-                               "{{ dict.data.2 }}"]
+            var labels = ["{{ dict.0.name_owner }}",
+                          "{{ dict.1.name_owner }}",
+                          "{{ dict.2.name_owner }}"]
+            var defaultData = ["{{ dict.0.star_count }}",
+                               "{{ dict.1.star_count }}",
+                               "{{ dict.2.star_count }}"]
             var myLineChart = new Chart(ctx, {
               type: 'horizontalBar',
               data: {
@@ -34,6 +38,7 @@
                 ],
               },
               options: {
+                legend: { display: false },
                 data: {
                       labels: {
                           fontColor: '#ffffff'
@@ -44,34 +49,35 @@
                   fontColor: '#ffffff'
                 },
                 scales: {
-                  xAxes: [{
+                 xAxes: [{
                     ticks: {
-                      suggestedMax: 40000,
-                      suggestedMin: 0,
-                      stepSize: 10000,
-                      fontColor: '#000',
+                       beginAtZero: true
                     }
-                  }],
-                  yAxes: [{
-                    ticks: {
-                        fontColor: '#000'
-                      }
-                  }]
+                 }]
                 },
-              }
+              },
+              plugins: [{
+                beforeInit: function (chart) {
+                  chart.data.labels.forEach(function (item, i, a) {
+                    if (item.length > 5) {
+                        a[i] = item.split("/");
+                        console.debug(a[i]);
+                    }
+                  })
+                }
+              }]
             });
             </script>
-            <a href="{% url 'chart:chart_new' %}" class="btn btn-outline-primary btn-sm">別の条件で比較する</a>
-          </div>
+            <div class="chart-btn">
+            <a href="{% url 'chart:chart_new' %}" class="btn btn-primary btn-sm">別の条件で比較する</a>
+            </div>
+            <div class="chart-btn">
+            <a href="/#access" class="btn btn-primary btn-sm">ランキングに戻る</a>
+            </div>
+           </div>
+           </div>
+         </div>
       </div>
     </div>
-</header>
-
-<!-- Page Content -->
-<section class="py-5">
-  <div class="container">
-    <h2 class="font-weight-light">Page Content</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
-  </div>
-</section>
+</div>
 {% endblock content%}

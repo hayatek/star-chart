@@ -3,12 +3,16 @@ from core.models import Repository
 
 class PostForm(forms.Form):
     repository_1 = forms.CharField(
-        label='リポジトリ(1)', max_length=40,required=True,
-                                error_messages={'required': '必須項目です。'})
+        label='リポジトリ(1)*', max_length=40,required=True,
+        error_messages={'required': '必須入力項目です。'},
+        help_text='例) django or django/django')
     repository_2 = forms.CharField(
-        label='リポジトリ(2)', max_length=40,required=False)
+        label='リポジトリ(2)*', max_length=40,required=True,
+        error_messages={'required': '必須入力項目です。'},
+        help_text='例) flask or pallets/flask')
     repository_3 = forms.CharField(
-        label='リポジトリ(3)', max_length=40,required=False)
+        label='リポジトリ(3)', max_length=40,required=False,
+        help_text='例) rails or rails/rails')
 
     def clean_repository_1(self):
         repository_1 = self.cleaned_data['repository_1']
