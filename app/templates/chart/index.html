@@ -4,14 +4,11 @@
 
 {% block content %}
 <header class="masthead">
-  <div class="container h-100">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center">
-        <div class="jumbotron">
+    <div class="jumbotron">
         <h4 class="font-weight-light">Githubリポジトリのスター数を比較してみよう。</h4>
         <div class="lastupdate">
             <i class="material-icons calendar">calendar_today</i>
-            <p>Last Update:{{ last_fetched_date }}</p>
+            <p>Last Update: {{ last_fetched_date|date:"Y-m-d H:i" }}</p>
         </div>
         <div class="d-flex justify-content-center align-items-center">
           <div class="row">
@@ -24,6 +21,7 @@
                                   <input type="" class="form-control"
                                          name="{{ field.name }}"
                                          id="{{ field.name }}"
+                                         value="{{ field.value }}"
                                          placeholder="{{ field.help_text }}">
                     </div>
                     {% if field.errors %}
@@ -37,10 +35,7 @@
               </form>
           </div>
         </div>
-        </div>
-      </div>
     </div>
-  </div>
 </header>
 
 <!-- Page Content -->

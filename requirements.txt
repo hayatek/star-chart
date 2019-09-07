@@ -2,3 +2,6 @@ Django>=2.1.3,<2.3.0
 psycopg2>=2.7.5,<2.8.0
 flake8>=3.6.0,<3.8.0
 requests>=2.21.0
+celery==4.3.0
+redis==3.3.0
+django_celery_beat==1.5.0

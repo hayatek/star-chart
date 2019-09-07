@@ -4,6 +4,7 @@ body {
   "Hiragino Kaku Gothic Pro", "Meiryo UI", "メイリオ", Meiryo,
   "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "ＭＳ Ｐゴシック",
   "MS PGothic", sans-serif;
+  background: #9B59B6;
 }
 
 /* ---------navigation ---------*/
@@ -15,22 +16,21 @@ body {
 /* ---------form ---------*/
 .masthead {
   height: 100vh;
-  min-height: 500px;
+  width: 100vw;
   background: #9B59B6;
-  /*padding-top:-60px;*/
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
-.masthead .jumbotron{
-    margin: 30px auto 20px auto;
+.jumbotron{
+    padding: 20px 10px;
+    margin: 80px 10px;
     color:#000;
-    min-height: 200px;
-    max-height: 84vh;
+    min-height: 500px;
+    min-width:  100px;
+    max-height: 100vh;
     max-width: 700px;
     background:#fff;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    text-align:center;
 }
 
 .lastupdate{
@@ -62,7 +62,8 @@ body {
 
 .btn-lg {
     padding: 1px 30px;
-    border-radius: 5px;
+    margin: 10px auto;
+    border-radius: 5px !important;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:visited {
@@ -76,25 +77,47 @@ body {
 }
 
 /* ---------chart ---------*/
-.chart-container .jumbotron{
-    margin: 0px auto 0 auto;
-    color:#000;
-    min-height: 200px;
-    max-height: 82vh;
-    max-width: 700px;
-    background:#fff;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
 .chart-container {
-  background: #9B59B6;
-  height: 100vh;
-  width: 100vw;
+    height: 100vh;
+    width: 100vw;
+    background: #9B59B6;
 }
 
+.chart-btn-group{
+    margin-top:30px;
+    position: relative;
+    justify-content: center;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+}
 .chart-btn{
-    margin: 10px auto;
-    width: 200px !important;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.btn-sm{
+    width: 150px !important;
+}
+
+.btn-success, .btn-success:hover, .btn-success:visited {
+    background-color: #9B59B6 !important;
+    border: none;
+}
+
+.btn-success:hover,.btn-success:active{
+    background-color: #B388FF !important;
+}
+
+.btn-info, .btn-info:hover, .btn-info:visited {
+    background-color: #00C348 !important;
+    border: none;
+}
+
+.btn-info:hover,.btn-info:active{
+    background-color: #81C784 !important;
 }
 
 /* ---------ranking ---------*/
@@ -115,12 +138,12 @@ body {
 
 .access-ranking h4{
     color:#fff;
-    margin: 14px 10px 14px 0px;
+    margin: 14px 16px 14px 0px;
 }
 
 .material-icons.access{
     color:#fff;
-    margin: 10px 4px 10px 0px;
+    margin: 10px 5px 10px 0px;
     padding: 0 0 0 1em;
     font-size: 30px;
 }
@@ -134,8 +157,8 @@ img{
 .card {
   margin: 5px auto 20px auto;
   width: 300px;
-  background: #fff
-  border-radius: 5px;
+  background: #fff;
+  border-radius: 5px !important;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -143,9 +166,9 @@ img{
     margin: 12px auto 0px auto;
 }
 
-
 .card-footer{
     background-color: #F1F8E9;
+    border-radius: 5px !important;
     justify-content: center;
     display: -webkit-flex;
     display: -moz-flex;
@@ -158,31 +181,37 @@ img{
     list-style: none;
 }
 
-.material-icons eye{
-}
-
-
-
 @media (min-width: 576px){
 }
 
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+    .jumbotron{
+        padding: 30px 10px;
+        margin: 80px auto;
+        color:#000;
+        min-height: 500px;
+        min-width:  100px;
+        max-height: 100vh;
+        max-width: 700px;
+        background:#fff;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        text-align:center;
+    }
 
+    /* ---------form ---------*/
+    .btn-lg {
+        padding: 2px 30px;
+        border-radius: 5px;
+    }
+    /* ---------chart ---------*/
+    .chartjs-container {
+        margin: auto;
+        height: 35vh;
+        width:  35vw;
+    }
+}
 
 @media (min-width: 992px){
-/* ---------form ---------*/
-.btn-lg {
-    padding: 2px 30px;
-    border-radius: 5px;
-}
-/* ---------chart ---------*/
-.chart-container {
-  position: relative;
-  margin: 0px auto;
-  height: 100vh;
-  width: 100vw;
-}
-
 }
 
 @media (min-width: 1200px){}

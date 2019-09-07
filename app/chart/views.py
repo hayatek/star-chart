@@ -68,25 +68,12 @@ def chart_new(request):
             combination_pk = updated_query[0].pk
             return redirect('chart:chart_detail', pk=combination_pk)
     else:
+        #form = PostForm(request.POST or None)
         form = PostForm()
     return render(request, 'chart/index.html', \
          {'form': form,
           'access' : access,
           'last_fetched_date' : last_fetched_date})
-
-
-def get_database_id(repository_name):
-    result = Repository.objects.filter(name_owner__icontains=repository_name)
-    return result
-
-def get_repository_info(id_list):
-    result_repository_info = []
-    for item in id_list:
-        if Repository.objects.filter(database_id=item).exists():
-            result_repository_info.append(Repository.objects.values().
-            filter(database_id=item)[0])
-        #print('result_repository_info=', result_repository_info)
-    return result_repository_info
 
 def chart_detail(request, pk):
     last_fetched_date = Repository.objects.latest('fetched_at').fetched_at
@@ -121,3 +108,15 @@ def chart_detail(request, pk):
 
     return render(request, 'chart/chart.html',
                 {'dict': dict,'last_fetched_date' : last_fetched_date})
+
+def get_database_id(repository_name):
+    result = Repository.objects.filter(name_owner__icontains=repository_name)
+    return result
+
+def get_repository_info(id_list):
+    result_repository_info = []
+    for item in id_list:
+        if Repository.objects.filter(database_id=item).exists():
+            result_repository_info.append(Repository.objects.values().
+            filter(database_id=item)[0])
+    return result_repository_info

@@ -8,7 +8,6 @@ RUN apk --update-cache add python3-dev postgresql-client \
     gcc g++ make gfortran openblas-dev linux-headers \
     linux-headers postgresql-dev
 RUN pip3 install --upgrade pip
-RUN pip3 uninstall pandas
 RUN pip3 install --no-cache-dir pandas --no-build-isolation
 RUN pip3 install -r /requirements.txt
 
