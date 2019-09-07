@@ -4,27 +4,29 @@
 
 {% block content %}
 <div class="chart-container">
-  <div class="container h-100">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center">
-        <div class="jumbotron">
-        <h4 class="font-weight-light">Githubのスター数</h4>
+    <div class="jumbotron">
+        <h4 class="font-weight-light">リポジトリのスター数</h4>
         <div class="lastupdate">
             <i class="material-icons calendar">calendar_today</i>
-            <p>Last Update:{{ last_fetched_date }}</p>
+            <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i" }}</p>
         </div>
-          <div class="chartjs-container">
+        <div class="chartjs-container">
             <canvas id="myChart"></canvas>
             <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+            <progress id="animationProgress" max="1" value="0" style="display: none;"></progress>
+            <!-- var progress = document.getElementById('animationProgress'); -->
             <script>
-            var ctx = document.getElementById('myChart').getContext('2d');
+            var progress = document.getElementById('animationProgress');
             var labels = ["{{ dict.0.name_owner }}",
-                          "{{ dict.1.name_owner }}",
-                          "{{ dict.2.name_owner }}"]
+                          "{{ dict.1.name_owner }}"]
             var defaultData = ["{{ dict.0.star_count }}",
-                               "{{ dict.1.star_count }}",
-                               "{{ dict.2.star_count }}"]
-            var myLineChart = new Chart(ctx, {
+                               "{{ dict.1.star_count }}"]
+            var name_owner = "{{ dict.2.name_owner }}"
+            if (name_owner) {
+                labels.push("{{ dict.2.name_owner }}");
+                defaultData.push("{{ dict.2.star_count }}");
+            }
+            var myLineChart = {
               type: 'horizontalBar',
               data: {
                 labels: labels,
@@ -32,7 +34,7 @@
                   {
                     label: 'Repositoryのスター数',
                     data: defaultData,
-                    backgroundColor: ['#1BC98D','#9F85FF','#1A97C6'],
+                    backgroundColor: ['#64B5F6','#F06292','#FFF176'],
                     borderColor: '#ffffff'
                   },
                 ],
@@ -55,29 +57,41 @@
                     }
                  }]
                 },
+                animation: {
+                    onProgress: function(animation) {
+                        progress.value = animation.currentStep / animation.numSteps;
+                    },
+                    onComplete: function() {
+                            progress.value = 0;
+                    }
+                },
               },
               plugins: [{
                 beforeInit: function (chart) {
                   chart.data.labels.forEach(function (item, i, a) {
                     if (item.length > 5) {
                         a[i] = item.split("/");
-                        console.debug(a[i]);
                     }
                   })
                 }
               }]
-            });
+            }
+
+            window.onload = function() {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            window.myLine = new Chart(ctx, myLineChart);
+            }
+
             </script>
-            <div class="chart-btn">
-            <a href="{% url 'chart:chart_new' %}" class="btn btn-primary btn-sm">別の条件で比較する</a>
+            <div class="chart-btn-group">
+                <div class="chart-btn">
+                <a href="{% url 'chart:chart_new' %}" class="btn btn-success btn-sm">別の条件で比較する</a>
+                </div>
+                <div class="chart-btn">
+                <a href="{% url 'chart:chart_new' %}#access" class="btn btn-info btn-sm">ランキングを見る</a>
+                </div>
             </div>
-            <div class="chart-btn">
-            <a href="/#access" class="btn btn-primary btn-sm">ランキングに戻る</a>
-            </div>
-           </div>
-           </div>
-         </div>
-      </div>
+        </div>
     </div>
 </div>
 {% endblock content%}

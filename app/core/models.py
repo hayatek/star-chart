@@ -1,8 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from core.get_graphql import GetGraphql
-import pandas as pd
-import json
 
 
 class Repository(models.Model):
@@ -24,6 +21,7 @@ class Repository(models.Model):
 
     def __str__(self):
         return self.name_owner
+
 
 '''
 graphql_obj = GetGraphql()
