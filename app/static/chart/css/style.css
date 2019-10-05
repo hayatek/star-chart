@@ -20,7 +20,7 @@ body {
   background: #9B59B6;
 }
 
-.jumbotron{
+.chart-container .jumbotron{
     padding: 20px 10px;
     margin: 80px 10px;
     color:#000;
@@ -31,6 +31,23 @@ body {
     background:#fff;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     text-align:center;
+}
+
+.masthead .jumbotron{
+    padding: 20px 10px;
+    margin: 80px 10px;
+    color:#000;
+    min-height: 500px;
+    min-width:  100px;
+    max-height: 100vh;
+    max-width: 700px;
+    background:#fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    text-align:center;
+}
+
+.lang{
+    margin: 10px auto;
 }
 
 .lastupdate{
@@ -64,6 +81,7 @@ body {
     padding: 1px 30px;
     margin: 10px auto;
     border-radius: 5px !important;
+    width: 250px !important;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:visited {
@@ -78,13 +96,13 @@ body {
 
 /* ---------chart ---------*/
 .chart-container {
-    height: 100vh;
+    /*height: 100vh;*/
     width: 100vw;
     background: #9B59B6;
 }
 
 .chart-btn-group{
-    margin-top:30px;
+    margin-top:50px;
     position: relative;
     justify-content: center;
     display: -webkit-flex;
@@ -94,6 +112,7 @@ body {
     display: flex;
 }
 .chart-btn{
+/*    margin-top: 50px; */
     margin-right: 5px;
     margin-left: 5px;
 }
@@ -185,13 +204,24 @@ img{
 }
 
 @media (min-width: 768px) {
-    .jumbotron{
+    .masthead .jumbotron{
         padding: 30px 10px;
         margin: 80px auto;
         color:#000;
         min-height: 500px;
         min-width:  100px;
         max-height: 100vh;
+        max-width: 700px;
+        background:#fff;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        text-align:center;
+    }
+    .chart-container .jumbotron{
+        padding: 20px 10px;
+        margin: 80px auto;
+        color:#000;
+        min-height: 500px;
+        min-width:  100px;
         max-width: 700px;
         background:#fff;
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -208,6 +238,10 @@ img{
         margin: auto;
         height: 35vh;
         width:  35vw;
+    }
+
+    .chartjs-container.h5{
+        margin: 10px auto;
     }
 }
 

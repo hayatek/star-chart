@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %}chart{% endblock %}
 
@@ -11,79 +12,46 @@
             <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i" }}</p>
         </div>
         <div class="chartjs-container">
-            <canvas id="myChart"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-            <progress id="animationProgress" max="1" value="0" style="display: none;"></progress>
-            <!-- var progress = document.getElementById('animationProgress'); -->
-            <script>
-            var progress = document.getElementById('animationProgress');
-            var labels = ["{{ dict.0.name_owner }}",
-                          "{{ dict.1.name_owner }}"]
-            var defaultData = ["{{ dict.0.star_count }}",
-                               "{{ dict.1.star_count }}"]
-            var name_owner = "{{ dict.2.name_owner }}"
-            if (name_owner) {
-                labels.push("{{ dict.2.name_owner }}");
-                defaultData.push("{{ dict.2.star_count }}");
-            }
-            var myLineChart = {
-              type: 'horizontalBar',
-              data: {
-                labels: labels,
-                datasets: [
-                  {
-                    label: 'Repositoryのスター数',
-                    data: defaultData,
-                    backgroundColor: ['#64B5F6','#F06292','#FFF176'],
-                    borderColor: '#ffffff'
-                  },
-                ],
-              },
-              options: {
-                legend: { display: false },
-                data: {
-                      labels: {
-                          fontColor: '#ffffff'
-                      }
-                },
-                title: {
-                  display: true,
-                  fontColor: '#ffffff'
-                },
-                scales: {
-                 xAxes: [{
-                    ticks: {
-                       beginAtZero: true
+            <div class="barchart-container">
+                <h5>Daily</h5>
+                <canvas id="barChart"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                <script>
+                    var barLabels = ["{{ dict.0.name_owner }}","{{ dict.1.name_owner }}"];
+                    var barDefaultData = ["{{ dict.0.star_count }}","{{ dict.1.star_count }}"];
+                    var resource_path = ["{{ dict.0.resource_path }}","{{ dict.1.resource_path }}"];
+                    var barNameOwner = "{{ dict.2.name_owner }}";
+                    if (barNameOwner) {
+                        barLabels.push("{{ dict.2.name_owner }}");
+                        barDefaultData.push("{{ dict.2.star_count }}");
+                        resource_path.push("{{ dict.2.resource_path }}");
                     }
-                 }]
-                },
-                animation: {
-                    onProgress: function(animation) {
-                        progress.value = animation.currentStep / animation.numSteps;
-                    },
-                    onComplete: function() {
-                            progress.value = 0;
-                    }
-                },
-              },
-              plugins: [{
-                beforeInit: function (chart) {
-                  chart.data.labels.forEach(function (item, i, a) {
-                    if (item.length > 5) {
-                        a[i] = item.split("/");
-                    }
-                  })
-                }
-              }]
-            }
-
-            window.onload = function() {
-            var ctx = document.getElementById("myChart").getContext("2d");
-            window.myLine = new Chart(ctx, myLineChart);
-            }
-
-            </script>
-            <div class="chart-btn-group">
+                </script>
+                <script src="{% static "chart/js/chartconfig.js" %}"></script>
+            </div>
+            <div class="linechart-container">
+                <h5>monthly</h5>
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="git-btn-group" id="git-btn-group">
+                <p>Go To Github</p>
+                <div class="git-btn1">
+                {% if dict.0.name_owner %}
+                    <a href="https://github.com/{{ dict.0.name_owner }}">{{ dict.0.name_owner }}</a>
+                {% endif %}
+                </div>
+                <div class="git-btn2">
+                {% if dict.1.name_owner %}
+                    <a href="https://github.com/{{ dict.1.name_owner }}">{{ dict.1.name_owner }}</a>
+                {% endif %}
+                </div>
+                <div class="git-btn3">
+                {% if dict.2.name_owner %}
+                    <a href="https://github.com/{{ dict.2.name_owner }}" class="btn btn-info btn-sm">{{ dict.2.name_owner }}</a>
+                {% endif %}
+                </div>
+            </div>
+            <div class="chart-btn-group" id="button-group">
                 <div class="chart-btn">
                 <a href="{% url 'chart:chart_new' %}" class="btn btn-success btn-sm">別の条件で比較する</a>
                 </div>

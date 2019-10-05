@@ -68,7 +68,6 @@ def chart_new(request):
             combination_pk = updated_query[0].pk
             return redirect('chart:chart_detail', pk=combination_pk)
     else:
-        #form = PostForm(request.POST or None)
         form = PostForm()
     return render(request, 'chart/index.html', \
          {'form': form,
@@ -76,9 +75,12 @@ def chart_new(request):
           'last_fetched_date' : last_fetched_date})
 
 def chart_detail(request, pk):
+    id_list = []
+    repository_list = []
+    dict = []
+
     last_fetched_date = Repository.objects.latest('fetched_at').fetched_at
     post = Combination.objects.get(pk=pk)
-    id_list = []
     id_list = [post.database_id1,
                post.database_id2,
                post.database_id3]
@@ -97,9 +99,6 @@ def chart_detail(request, pk):
             combination_query.updated_at = timezone.now()
             combination_query.access_count += 1
             combination_query.save()
-
-    repository_list = []
-    dict = []
 
     repository_list = get_repository_info(id_list)
 
