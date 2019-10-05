@@ -5,5 +5,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('chart.urls', namespace='chart')),
-#    path('', views.index, name='index'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

@@ -1,21 +1,28 @@
 from django import forms
 from core.models import Repository
+from django.core import validators
+from django.forms.utils import ErrorList
+from django.utils.translation import gettext_lazy as _
+
 
 class PostForm(forms.Form):
     repository_1 = forms.CharField(
-        label='リポジトリ(1)*', max_length=40,required=True,
+        label=_('リポジトリ(1)*'), max_length=40,required=True,
         initial='',
-        error_messages={'required': '必須入力項目です。'},
-        help_text='例) django or django/django')
+        error_messages={'required': _('必須入力項目です。')},
+        help_text=_('例) django or django/django'),
+        validators=[validators.MinLengthValidator(2)])
+
     repository_2 = forms.CharField(
-        label='リポジトリ(2)*', max_length=40,required=True,
+        label=_('リポジトリ(2)*'), max_length=40,required=True,
         initial='',
-        error_messages={'required': '必須入力項目です。'},
-        help_text='例) flask or pallets/flask')
+        error_messages={'required': _('必須入力項目です。')},
+        help_text=_('例) flask or pallets/flask'))
     repository_3 = forms.CharField(
-        label='リポジトリ(3)', max_length=40,required=False,
+        label=_('リポジトリ(3)'), max_length=40,required=False,
         initial='',
-        help_text='例) rails or rails/rails')
+        help_text=_('例) rails or rails/rails'))
+
 
     def clean_repository_1(self):
         repository_1 = self.cleaned_data['repository_1']
@@ -37,4 +44,24 @@ class PostForm(forms.Form):
                                         repository_name).exists():
             pass
         else:
-            raise forms.ValidationError('リポジトリが存在しません。')
+            raise forms.ValidationError(_('リポジトリが存在しません。'))
+
+    def clean(self):
+        cleaned_data = super(PostForm, self).clean()
+        repository_1 = cleaned_data.get("repository_1")
+        repository_2 = cleaned_data.get("repository_2")
+        repository_3 = cleaned_data.get("repository_3")
+
+        if repository_1 == repository_2:
+            msg = _('同一リポジトリは指定できません。')
+            self._errors['repository_2'] = ErrorList([msg])
+
+        if repository_1 == repository_3:
+            msg = _('同一リポジトリは指定できません。')
+            self._errors['repository_3'] = ErrorList([msg])
+
+        if repository_2 == repository_3:
+            msg = _('同一リポジトリは指定できません。')
+            self._errors['repository_3'] = ErrorList([msg])
+
+        return cleaned_data

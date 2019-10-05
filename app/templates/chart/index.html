@@ -1,11 +1,29 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block page_title %}home{% endblock %}
 
 {% block content %}
 <header class="masthead">
+    <div class="index-container">
     <div class="jumbotron">
-        <h4 class="font-weight-light">Githubリポジトリのスター数を比較してみよう。</h4>
+        <div class="lang">
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Go">
+            </form>
+        </div>
+        <h4 class="font-weight-light">{% trans "Githubリポジトリのスター数を比較してみよう。" %}</h4>
         <div class="lastupdate">
             <i class="material-icons calendar">calendar_today</i>
             <p>Last Update: {{ last_fetched_date|date:"Y-m-d H:i" }}</p>
@@ -30,7 +48,7 @@
                     {% endif %}
                   {% endfor %}
                   <div class="form-group text-center">
-                  <input type="submit" value="スター数を比較する" class="btn btn-primary btn-lg"/>
+                  <input id="input1" type="submit" value={% trans "スター数を比較する" %} class="btn btn-primary btn-lg"/>
                   </div>
               </form>
           </div>
@@ -61,7 +79,7 @@
                     <span>{{ field.name_owner3 }}</span><BR>
                     {% endif %}
                     <div class="btn-card">
-                        <a href={% url 'chart:chart_detail' field.id %} class="btn btn-primary btn-sm">スター数を比較する</a>
+                        <a href={% url 'chart:chart_detail' field.id %} class="btn btn-primary btn-sm">{% trans "スター数を比較する" %}</a>
                     </div>
                   </div>
                   <div class="card-footer">
@@ -72,7 +90,7 @@
                  </div>
                 {% endfor %}
             </div>
-        </div>
+         </div>
       </div>
 </section>
 {% endblock %}

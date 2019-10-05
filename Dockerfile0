@@ -4,14 +4,12 @@ MAINTAINER hayatek
 ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
-RUN apk add --no-cache --virtual .tmp postgresql-client \
+RUN apk --update-cache add python3-dev postgresql-client \
     gcc g++ make gfortran openblas-dev linux-headers \
-    linux-headers postgresql-dev
+    linux-headers postgresql-dev gettext-dev
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir pandas --no-build-isolation
 RUN pip3 install -r /requirements.txt
-RUN apk add gettext-dev
-
 
 RUN mkdir /app
 WORKDIR /app
