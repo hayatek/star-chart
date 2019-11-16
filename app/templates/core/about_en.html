@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page_title %}about{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <section id="about">
+      <div class="container text-white">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h3>About this app</h3><BR>
+            <p class="lead">This app gets the number of stars of the repository via GitHub API and displays it in charts.</p>
+            <h4>Instructions</h4>
+            <p class="lead">1) Input repository name into the form on the Top page.</p>
+            <ul>
+                <li>Note: 1.Multiple repositories should be input.</li>
+                <li><b>Note: 2.Fuzzy search is performed using input character strings.</b></li>
+            </ul>
+            <p class="lead">2) Push "Compare" button.</p>
+            <p class="lead">3) Get the number of stars via GitHub API v4 and make charts.</p>
+            <ul>
+                <li>Daily:stars as of 0:00</li>
+                <li>Monthly:stars as of the beginning of month</li>
+            </ul>
+            <h4>About Developer</h4>
+            <p class="lead">Ex-COBOL programmer. Currently learning python and Django in order to become Web developer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+{% endblock %}

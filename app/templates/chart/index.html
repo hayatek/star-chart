@@ -6,7 +6,6 @@
 {% block content %}
 <header class="masthead">
     <div class="index-container">
-    <div class="jumbotron">
         <div class="lang">
             <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <input name="next" type="hidden" value="{{ redirect_to }}">
@@ -16,14 +15,14 @@
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for language in languages %}
                         <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                            {{ language.name_local }} ({{ language.code }})
+                            {{ language.name_local }}
                         </option>
                     {% endfor %}
                 </select>
-                <input type="submit" value="Go">
+                <input type="submit" value="submit" class="btn btn-secondary btn-sm">
             </form>
         </div>
-        <h4 class="font-weight-light">{% trans "Githubリポジトリのスター数を比較してみよう。" %}</h4>
+        <h4 class="font-weight-light">{% trans "TOP1000 GitHubリポジトリのスター数を比較してみよう。" %}</h4>
         <div class="lastupdate">
             <i class="material-icons calendar">calendar_today</i>
             <p>Last Update: {{ last_fetched_date|date:"Y-m-d H:i" }}</p>
@@ -58,39 +57,75 @@
 
 <!-- Page Content -->
 <section class="ranking" id=access>
-    <div class="container h-100">
-      <div class="row h-100 align-items-center">
-        <div class="col-12 text-center">
-            <div class="access-ranking">
-                <i class="material-icons access">bar_chart</i>
-                <h4 class="font-weight-light">Access Ranking</h4>
-            </div>
-                {% for field in access %}
-                <div class="card">
-                  <div class="card-body">
-                    <img src={{ field.avatar_url1 }}><BR>
-                    <span>{{ field.name_owner1 }}</span><BR>
-                    {% if field.name_owner2 %}
-                    <img src={{ field.avatar_url2 }}><BR>
-                    <span>{{ field.name_owner2 }}</span><BR>
-                    {% endif %}
-                    {% if field.name_owner3 %}
-                    <img src={{ field.avatar_url3 }}><BR>
-                    <span>{{ field.name_owner3 }}</span><BR>
-                    {% endif %}
-                    <div class="btn-card">
-                        <a href={% url 'chart:chart_detail' field.id %} class="btn btn-primary btn-sm">{% trans "スター数を比較する" %}</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="tab-header">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                          <a href="#tab1" class="nav-link active" data-toggle="tab">{% trans "最近の検索" %}</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#tab2" class="nav-link" data-toggle="tab">{% trans "アクセスランキング" %}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane active">
+                        {% for field in recently %}
+                        <div class="card">
+                            <div class="card-body">
+                                <img src={{ field.avatar_url1 }}><BR>
+                                <span>{{ field.name_owner1 }}</span><BR>
+                                {% if field.name_owner2 %}
+                                <img src={{ field.avatar_url2 }}><BR>
+                                <span>{{ field.name_owner2 }}</span><BR>
+                                {% endif %}
+                                {% if field.name_owner3 %}
+                                <img src={{ field.avatar_url3 }}><BR>
+                                <span>{{ field.name_owner3 }}</span><BR>
+                                {% endif %}
+                                <div class="btn-card">
+                                    <a href={% url 'chart:chart_detail' field.id %} class="btn btn-primary btn-lg">{% trans "スター数を比較する" %}</a>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <i class="material-icons eye">remove_red_eye</i>
+                                <span>Watch:</span>
+                                <span>{{ field.access_count }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
-                  </div>
-                  <div class="card-footer">
-                    <i class="material-icons eye">remove_red_eye</i>
-                    <span>Watch:</span>
-                    <span>{{ field.access_count }}</span>
-                  </div>
-                 </div>
-                {% endfor %}
+                    <div id="tab2" class="tab-pane">
+                        {% for field in access %}
+                        <div class="card">
+                            <div class="card-body">
+                                <img src={{ field.avatar_url1 }}><BR>
+                                <span>{{ field.name_owner1 }}</span><BR>
+                                {% if field.name_owner2 %}
+                                <img src={{ field.avatar_url2 }}><BR>
+                                <span>{{ field.name_owner2 }}</span><BR>
+                                {% endif %}
+                                {% if field.name_owner3 %}
+                                <img src={{ field.avatar_url3 }}><BR>
+                                <span>{{ field.name_owner3 }}</span><BR>
+                                {% endif %}
+                                <div class="btn-card">
+                                    <a href={% url 'chart:chart_detail' field.id %} class="btn btn-primary btn-lg">{% trans "スター数を比較する" %}</a>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <i class="material-icons eye">remove_red_eye</i>
+                                <span>Watch:</span>
+                                <span>{{ field.access_count }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
+        </div>
+    </div>
 </section>
 {% endblock %}

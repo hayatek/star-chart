@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import Combination
-from core.models import Repository
+from core.models import Repository, StarHistory
 from .forms import PostForm
 from django.utils import timezone
 
 
 def chart_new(request):
     access = Combination.objects.order_by('-access_count')[:10]
+    recently = Combination.objects.order_by('-updated_at')[:10]
     last_fetched_date = Repository.objects.latest('fetched_at').fetched_at
 
     if request.method == 'POST':
@@ -72,6 +73,7 @@ def chart_new(request):
     return render(request, 'chart/index.html', \
          {'form': form,
           'access' : access,
+          'recently' : recently,
           'last_fetched_date' : last_fetched_date})
 
 def chart_detail(request, pk):
@@ -105,8 +107,20 @@ def chart_detail(request, pk):
     dict = sorted(repository_list,
                         key=lambda x:x['star_count'], reverse=True)
 
+    history_date = []
+    history_query = []
+    merged_query = []
+    for item in dict:
+        if StarHistory.objects.select_related().filter(repository=item['id']).exists():
+            history_date = StarHistory.objects.values('monthly_date').filter(repository=item['id'])
+            history_query = StarHistory.objects.values('monthly_date','star_count_monthly').filter(repository=item['id'])
+            merged_query.append(history_query)
+
     return render(request, 'chart/chart.html',
-                {'dict': dict,'last_fetched_date' : last_fetched_date})
+                {'dict': dict,
+                 'last_fetched_date' : last_fetched_date,
+                 'history_date' : history_date,
+                 'merged_query': merged_query})
 
 def get_database_id(repository_name):
     result = Repository.objects.filter(name_owner__icontains=repository_name)

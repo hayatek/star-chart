@@ -1,64 +1,119 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}chart{% endblock %}
 
 {% block content %}
 <div class="chart-container">
-    <div class="jumbotron">
-        <h4 class="font-weight-light">リポジトリのスター数</h4>
-        <div class="lastupdate">
-            <i class="material-icons calendar">calendar_today</i>
-            <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i" }}</p>
+    <div class="chartjs-container">
+        <div class="barchart-container">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{% trans "GitHubのスター数 (Daily)" %}</h5>
+                    <div class="lastupdate">
+                        <i class="material-icons calendar">calendar_today</i>
+                        <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i" }}</p>
+                    </div>
+                    <canvas id="barChart"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                    <script>
+                        var barLabels = ["{{ dict.0.name_owner }}","{{ dict.1.name_owner }}"];
+                        var barDefaultData = [{{ dict.0.star_count }},{{ dict.1.star_count }}];
+                        var resource_path = ["{{ dict.0.resource_path }}","{{ dict.1.resource_path }}"];
+                        var barNameOwner = "{{ dict.2.name_owner }}";
+                        var lineLabels = [];
+                        var lineData1 = [];
+                        var lineData2 = [];
+                        var lineData3 = [];
+                        var lineDataArray = [lineData1,lineData2,lineData3];
+                        var index = 0;
+                        {% for field in merged_query %}
+                            {% for child_field in field %}
+                                if (index === 0) {
+                                    lineLabels.push("{{ child_field.monthly_date }}");
+                                }
+                                lineDataArray[index].push({{ child_field.star_count_monthly }});
+                            {% endfor %}
+                            index ++;
+                        {% endfor %}
+                        if (barNameOwner) {
+                            barLabels.push("{{ dict.2.name_owner }}");
+                            barDefaultData.push({{ dict.2.star_count }});
+                            resource_path.push("{{ dict.2.resource_path }}");
+                        }
+                        //if it's 1st day of the month, below logic needed to
+                        //skip otherwise 1st day will be duplicated in linechart.
+                        if ({{ dict.0.fetched_at.day }} != 1) {
+                            lineLabels.push("{{ dict.0.fetched_at.date }}");
+                            lineData1.push({{ dict.0.star_count }});
+                            lineData2.push({{ dict.1.star_count }});
+                            if (barNameOwner) {
+                                lineData3.push({{ dict.2.star_count }});
+                            }
+                        }
+                    </script>
+                    <script src="{% static "chart/js/chartconfig.js" %}"></script>
+                </div>
+            </div>
         </div>
-        <div class="chartjs-container">
-            <div class="barchart-container">
-                <h5>Daily</h5>
-                <canvas id="barChart"></canvas>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-                <script>
-                    var barLabels = ["{{ dict.0.name_owner }}","{{ dict.1.name_owner }}"];
-                    var barDefaultData = ["{{ dict.0.star_count }}","{{ dict.1.star_count }}"];
-                    var resource_path = ["{{ dict.0.resource_path }}","{{ dict.1.resource_path }}"];
-                    var barNameOwner = "{{ dict.2.name_owner }}";
-                    if (barNameOwner) {
-                        barLabels.push("{{ dict.2.name_owner }}");
-                        barDefaultData.push("{{ dict.2.star_count }}");
-                        resource_path.push("{{ dict.2.resource_path }}");
-                    }
-                </script>
-                <script src="{% static "chart/js/chartconfig.js" %}"></script>
-            </div>
-            <div class="linechart-container">
-                <h5>monthly</h5>
-                <canvas id="lineChart"></canvas>
-            </div>
-            <div class="git-btn-group" id="git-btn-group">
-                <p>Go To Github</p>
-                <div class="git-btn1">
-                {% if dict.0.name_owner %}
-                    <a href="https://github.com/{{ dict.0.name_owner }}">{{ dict.0.name_owner }}</a>
-                {% endif %}
-                </div>
-                <div class="git-btn2">
-                {% if dict.1.name_owner %}
-                    <a href="https://github.com/{{ dict.1.name_owner }}">{{ dict.1.name_owner }}</a>
-                {% endif %}
-                </div>
-                <div class="git-btn3">
-                {% if dict.2.name_owner %}
-                    <a href="https://github.com/{{ dict.2.name_owner }}" class="btn btn-info btn-sm">{{ dict.2.name_owner }}</a>
-                {% endif %}
+        <div class="linechart-container">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{% trans "GitHubのスター数 (Monthly)" %}</h5>
+                    <div class="lastupdate">
+                        <i class="material-icons calendar">calendar_today</i>
+                        <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i" }}</p>
+                    </div>
+                    <canvas id="lineChart"></canvas>
                 </div>
             </div>
-            <div class="chart-btn-group" id="button-group">
-                <div class="chart-btn">
-                <a href="{% url 'chart:chart_new' %}" class="btn btn-success btn-sm">別の条件で比較する</a>
-                </div>
-                <div class="chart-btn">
-                <a href="{% url 'chart:chart_new' %}#access" class="btn btn-info btn-sm">ランキングを見る</a>
-                </div>
+        </div>
+    </div>
+    <div class="git-btn-group" id="git-btn-group">
+        {% if dict.0.name_owner %}
+        <div class="card">
+            <div class="card-body">
+                <img src={{ dict.0.avatar_url }}><BR>
+                <a href="https://github.com/{{ dict.0.name_owner }}" target=”_blank”>{{ dict.0.name_owner }}</a>
             </div>
+            <div class="card-footer card-1">
+                <p>Daily Star</p>
+                <span>{{ dict.0.star_count }}</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if dict.1.name_owner %}
+        <div class="card">
+            <div class="card-body">
+                <img src={{ dict.1.avatar_url }}><BR>
+                <a href="https://github.com/{{ dict.1.name_owner }}" target=”_blank”>{{ dict.1.name_owner }}</a>
+            </div>
+            <div class="card-footer card-2">
+                <p>Daily Star</p>
+                <span>{{ dict.1.star_count }}</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if dict.2.name_owner %}
+        <div class="card">
+            <div class="card-body">
+                <img src={{ dict.2.avatar_url }}><BR>
+                <a href="https://github.com/{{ dict.2.name_owner }}" target=”_blank”>{{ dict.2.name_owner }}</a><BR>
+            </div>
+            <div class="card-footer card-3">
+                <p>Daily Star</p>
+                <span>{{ dict.2.star_count }}</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="chart-btn-group" id="button-group">
+        <div class="chart-btn">
+        <a href="{% url 'chart:chart_new' %}" class="btn btn-success btn-sm">{% trans "別の条件で比較する" %}</a>
+        </div>
+        <div class="chart-btn">
+        <a href="{% url 'chart:chart_new' %}#access" class="btn btn-info btn-sm">{% trans "ランキングを見る" %}</a>
         </div>
     </div>
 </div>

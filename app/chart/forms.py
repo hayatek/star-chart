@@ -11,6 +11,7 @@ class PostForm(forms.Form):
         initial='',
         error_messages={'required': _('必須入力項目です。')},
         help_text=_('例) django or django/django'),
+        widget=forms.TextInput(attrs={'size': '10'}),
         validators=[validators.MinLengthValidator(2)])
 
     repository_2 = forms.CharField(
@@ -52,16 +53,19 @@ class PostForm(forms.Form):
         repository_2 = cleaned_data.get("repository_2")
         repository_3 = cleaned_data.get("repository_3")
 
-        if repository_1 == repository_2:
-            msg = _('同一リポジトリは指定できません。')
-            self._errors['repository_2'] = ErrorList([msg])
+        if repository_1 and repository_2:
+            if repository_1 == repository_2:
+                msg = _('同一リポジトリは指定できません。')
+                self._errors['repository_2'] = ErrorList([msg])
 
-        if repository_1 == repository_3:
-            msg = _('同一リポジトリは指定できません。')
-            self._errors['repository_3'] = ErrorList([msg])
+        if repository_1 and repository_3:
+            if repository_1 == repository_3:
+                msg = _('同一リポジトリは指定できません。')
+                self._errors['repository_3'] = ErrorList([msg])
 
-        if repository_2 == repository_3:
-            msg = _('同一リポジトリは指定できません。')
-            self._errors['repository_3'] = ErrorList([msg])
+        if repository_2 and repository_3:
+            if repository_2 == repository_3:
+                msg = _('同一リポジトリは指定できません。')
+                self._errors['repository_3'] = ErrorList([msg])
 
         return cleaned_data

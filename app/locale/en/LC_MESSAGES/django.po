@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-21 14:19+0000\n"
+"POT-Creation-Date: 2019-11-04 14:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,8 +51,26 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-msgid "Githubリポジトリのスター数を比較してみよう。"
-msgstr "Compare the number of stars on Github"
+msgid "GitHubのスター数 (Daily)"
+msgstr "Number of daily stars on GitHub"
+
+msgid "GitHubのスター数 (Monthly)"
+msgstr "Number of monthly stars on GitHub"
+
+msgid "別の条件で比較する"
+msgstr "Back to Form"
+
+msgid "ランキングを見る"
+msgstr "See Ranking"
+
+msgid "TOP1000 GitHubリポジトリのスター数を比較してみよう。"
+msgstr "Compare the number of Top 1000 repository's stars on Github"
 
 msgid "スター数を比較する"
 msgstr "Compare"
+
+msgid "最近の検索"
+msgstr "Recently Accessed"
+
+msgid "アクセスランキング"
+msgstr "Access Ranking"

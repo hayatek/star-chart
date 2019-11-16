@@ -10,30 +10,27 @@ import json
 
 @shared_task
 def update_database():
-    print('update_database!')
-
+    #print('update_database!')
     graphql_obj = GetGraphql()
     first_value = 100
     after_value = None
     query_string = "stars:>10000"
     has_next_page = True
-    j = 0
-    print('Graphql!!!')
-    while has_next_page:
-        print('has_next_page!!!')
+    record_number = 1
+    #print('GetGraphql finished!!!')
+    while (has_next_page) and (record_number <= 1000):
+        #print('has_next_page!!!')
         json_result = graphql_obj.get_result(first_value, after_value, query_string)
         has_next_page = json_result['data']['search']['pageInfo']['hasNextPage']
         after_value = json_result['data']['search']['pageInfo']['endCursor']
         df = pd.io.json.json_normalize(json_result['data']['search']['edges'])
+        #print('df.length=',len(df))
 
-        for i in range(1000):
-            #print('i=：{0}'.format(i))
-            #print('i,0=：{0}'.format(df.iat[i,0]))
-            #print('i,6=：{0}'.format(df.iat[i,6]))
-            '''
+        for i in range(len(df)):
             if Repository.objects.filter(
                             database_id=df.at[i,'node.databaseId']).exists():
                 try:
+                    #print('DB update!!')
                     repository_query = Repository.objects.get(
                                 database_id = df.at[i,'node.databaseId'])
                     repository_query.updated_at_github = \
@@ -59,12 +56,10 @@ def update_database():
                         star_count = df.at[i,'node.stargazers.totalCount'])
                 except Exception as e:
                     print('create_error',e)
-                '''
 
             repository_updated = Repository.objects.get(
                         database_id = df.at[i,'node.databaseId'])
 
-            #print('fetched_at.day',repository_updated.fetched_at.day)
             if repository_updated.fetched_at.day == 1:
                 try:
                     StarHistory.objects.create(
@@ -75,3 +70,5 @@ def update_database():
                                 datetime.timezone(datetime.timedelta(hours=9))))
                 except Exception as e:
                     print('history_create_error',e)
+            record_number = record_number + 1
+            #print('record_number=',record_number)
