@@ -1,16 +1,14 @@
-console.log(resource_path);
-var barChart = {
+var barChart =
+{
       type: 'horizontalBar',
       data: {
         labels: barLabels,
-        datasets: [
-          {
-            label: 'Repositoryのスター数',
+        datasets: [{
+            label: 'スター数',
             data: barDefaultData,
-            backgroundColor: ['#64B5F6','#F06292','#FFF176'],
+            backgroundColor: ['#64B5F6','#F06292','#1BC98D'],
             borderColor: '#ffffff'
-          },
-        ],
+        },],
       },
       options: {
         legend: { display: false },
@@ -30,7 +28,7 @@ var barChart = {
             }
          }]
         },
-      plugins: [{
+        plugins: [{
         beforeInit: function (chart) {
           chart.data.labels.forEach(function (item, i, a) {
             if (item.length > 5) {
@@ -38,32 +36,35 @@ var barChart = {
             }
           })
         }
-      }]
+        }]
     }
 }
+//console.log(lineLabels);
+//console.log(lineData2);
+//console.log(lineData3);
 var lineChart = {
       type: 'line',
       data: {
-        labels: ["9/1", "10/1", "11/1", "12/1", "1/1"],
+        labels: lineLabels,
         datasets: [
           {
-            label: "vuejs",
+            label: barLabels[0],
             fill: false,
-            lineTension:0,
-            borderColor:["#1A97C6"],
-            data: [300,400,250,600,700]
+            lineTension:0.2,
+            borderColor:["#64B5F6"],
+            data: lineData1
           },{
-            label: "rails",
+            label: barLabels[1],
             fill: false,
-            lineTension:0,
-            borderColor:["#E4D836"],
-            data: [200,300,350,500,600]
+            lineTension:0.2,
+            borderColor:["#F06292"],
+            data: lineData2
           },{
-            label: "django",
+            label: barLabels[2],
             fill: false,
-            lineTension:0,
-            borderColor:["#E74759"],
-            data: [100,200,450,300,400]
+            lineTension:0.2,
+            borderColor:["#1BC98D"],
+            data: lineData3
           }]
       },
       options: {

@@ -1,6 +1,7 @@
 <!doctype html>
 {% load static %}
-<html lang="ja">
+{% load i18n %}
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,20 +10,29 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link href="{% static "chart/css/style.css" %}" rel="stylesheet">
 
     <title>{% block page_title %}{% endblock %}</title>
   </head>
   <body>
+      <!-- Navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">StarChart</a>
+        <a class="navbar-brand" href="{% url 'chart:chart_new' %}">StarChart</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'chart:chart_new' %}#">Home<span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% if LANGUAGE_CODE == 'en' %}
+                <a class="nav-link" href="{% url 'core:about_en_view' %}">About</a>
+                {% elif LANGUAGE_CODE == 'ja' %}
+                <a class="nav-link" href="{% url 'core:about_ja_view' %}">About</a>
+                {% endif %}
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'chart:chart_new' %}#access">Ranking</a>
@@ -30,12 +40,36 @@
           </ul>
         </div>
       </nav>
+      <!-- Navbar END -->
     {% block content %}{% endblock %}
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/glottologist"></script>
+    <script>
+        $(function(){
+            $("ul.navbar-nav li").click(function(){
+              $("ul.navbar-nav li.active").removeClass("active");
+              $(this).addClass("active");
+            });
+        });
+    </script>
   </body>
+  <footer class="footer mt-auto py-3">
+    <div class="footer-container">
+        <span>Copyright </span>&copy; 2019<script>new Date().getFullYear()>2019&&document.write("-"+new Date().getFullYear());</script><span> hayatek All Rights Reserved.</span>
+        <div class="footerlink-container">
+            {% if LANGUAGE_CODE == 'en' %}
+            <a class="nav-link" href="{% url 'core:about_en_view' %}">About</a>
+            <span>|</span>
+            <a class="nav-link" href="{% url 'core:terms_en_view' %}">Terms of Service</a>
+            {% elif LANGUAGE_CODE == 'ja' %}
+            <a class="nav-link" href="{% url 'core:about_ja_view' %}">About</a>
+            <span>|</span>
+            <a class="nav-link" href="{% url 'core:terms_ja_view' %}">利用規約</a>
+            {% endif %}
+        </div>
+    </div>
+  </footer>
 </html>

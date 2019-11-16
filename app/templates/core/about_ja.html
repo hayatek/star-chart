@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page_title %}about{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <section id="about">
+      <div class="container text-white">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h3>このWebアプリについて</h3><BR>
+            <p class="lead">このアプリはGitHub GraphQL API v4を使用してGitHub上から対象リポジトリのスター数を取得して比較するアプリです。</p><BR>
+            <h4>使い方</h4>
+            <p class="lead">①トップページのフォームに比較したいリポジトリを入力します。</p>
+            <ul>
+                <li>※1 リポジトリは2つ以上の入力が必要です。</li>
+                <li>※2 入力文字列をあいまい検索します。</li>
+            </ul>
+            <p class="lead">②「スター数を比較する」ボタンを押す。</p>
+            <p class="lead">③①で入力されたリポジトリのGitHub上のスター数をグラフで表示します。</p>
+            <ul>
+                <li>Daily  :当日0:00時点のスター</li>
+                <li>Monthly:毎月1日時点のスター数</li>
+            </ul><BR>
+            <h4>作者について</h4><BR>
+            <p class="lead">元々はCOBOLエンジニアだったアラフォーエンジニアです。Webエンジニアへのジョブチェンジを目指して2018年11月よりPythonの学習を始める。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+{% endblock %}
