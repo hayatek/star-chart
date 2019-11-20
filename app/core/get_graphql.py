@@ -1,10 +1,11 @@
 import requests
-from config.local_settings import *
+import environ
+#from config.local_settings import *
 
 
 class GetGraphql:
-
-    headers = GITHUB_SECRET_KEY
+    env = environ.Env()
+    headers = env('GITHUB_SECRET_KEY')
 
     """docstring for graphQL"""
     def __init__(self):
