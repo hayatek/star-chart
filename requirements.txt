@@ -6,7 +6,7 @@ celery==4.3.0
 redis==3.3.0
 django_celery_beat==1.5.0
 django-celery-results==1.1.2
-django-environ
-dj-database-url
-django-heroku
-gunicorn
+django-environ==0.4.5
+dj-database-url==0.5.0
+django-heroku==0.3.1
+gunicorn==20.0.0
