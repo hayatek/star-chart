@@ -11,16 +11,20 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import environ
+#from .local_settings import *
 from celery.schedules import crontab
 from django.utils.translation import ugettext_lazy as _
+import environ
+
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+SECRET_KEY = env('SECRET_KEY')
+GITHUB_SECRET_KEY = env('GITHUB_SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -31,8 +35,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-SECRET_KEY = env('SECRET_KEY')
 
 
 # Application definition

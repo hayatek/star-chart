@@ -4,7 +4,6 @@ body {
   "Hiragino Kaku Gothic Pro", "Meiryo UI", "メイリオ", Meiryo,
   "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "ＭＳ Ｐゴシック",
   "MS PGothic", sans-serif;
-  /*font-size:1.6rem;/*  line-height: 1.2;*/
   background: #56CCF2;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -13,16 +12,12 @@ body {
 
 /* ---------navigation ---------*/
 .navbar{
-    font-family: "Roboto","Helvetica Neue";
+    font-family: "Helvetica Neue", Helvetica, Arial, Verdana;
     background: #4D3593 !important;
 }
 
 ul.navbar-nav li{
   background-color: transparent;
-}
-
-ul.navbar-nav li.active{
-    /*background: #000;*/
 }
 
 /* ---------form ---------*/
@@ -171,7 +166,6 @@ ul.navbar-nav li.active{
 .term-container .container p{
     font-size: 1.1em;
 }
-
 
 /* ---------chart ---------*/
 .chart-container {

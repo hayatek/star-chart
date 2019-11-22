@@ -1,12 +1,10 @@
 import requests
-import environ
-#from config.local_settings import *
+import json
+from django.conf import settings
 
 
 class GetGraphql:
-    env = environ.Env()
-    headers = env('GITHUB_SECRET_KEY')
-
+    headers =json.loads(settings.GITHUB_SECRET_KEY)
     """docstring for graphQL"""
     def __init__(self):
         super(GetGraphql, self).__init__()
@@ -22,9 +20,6 @@ class GetGraphql:
                             .format(request.status_code, query))
 
     def get_result(self, first_value, after_value, query_string):
-        #first_value = 2
-        #after_value = None
-        #query_string = "stars:>10000"
         query = '''
             query($first: Int!, $after: String, $query:String!){
             search(first:$first, after:$after, query:$query type: REPOSITORY){
