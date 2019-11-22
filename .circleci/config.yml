@@ -23,6 +23,9 @@ jobs:
             heroku container:push web --app ${HEROKU_APP_NAME}
             heroku container:release web --app ${HEROKU_APP_NAME}
       - run:
+          name: heroku db migrate
+          command: heroku run python manage.py migrate --app ${HEROKU_APP_NAME}
+      - run:
           name: heroku maintenance off
           command: heroku maintenance:off --app ${HEROKU_APP_NAME}
 workflows:
