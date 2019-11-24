@@ -1,23 +1,9 @@
-import os
 from .base_settings import *
-import django_heroku
-import dj_database_url
+import environ
 
 
-#DEBUG = False
-#PRODUCTION = True
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
-
-SECRET_KEY=os.environ['SECRET_KEY']
-GITHUB_SECRET_KEY=os.environ['GITHUB_SECRET_KEY']
-ALLOWED_HOSTS = ['*']
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
-
-# update db settings
-db_from_env = dj_database_url.config(conn_max_age=400)
-DATABASES['default'].update(db_from_env)
-
-#Whitenoise settings
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+SECRET_KEY = env('SECRET_KEY')
+GITHUB_SECRET_KEY = env('GITHUB_SECRET_KEY')
