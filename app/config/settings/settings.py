@@ -7,7 +7,6 @@ import dj_database_url
 #DEBUG = False
 #PRODUCTION = True
 
-
 SECRET_KEY=os.environ['SECRET_KEY']
 GITHUB_SECRET_KEY=os.environ['GITHUB_SECRET_KEY']
 ALLOWED_HOSTS = ['*']
