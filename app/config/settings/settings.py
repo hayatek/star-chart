@@ -4,7 +4,7 @@ import django_heroku
 import dj_database_url
 
 
-#DEBUG = False
+DEBUG = False
 #PRODUCTION = True
 
 SECRET_KEY=os.environ['SECRET_KEY']
