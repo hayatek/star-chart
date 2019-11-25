@@ -11,6 +11,12 @@ SECRET_KEY=os.environ['SECRET_KEY']
 GITHUB_SECRET_KEY=os.environ['GITHUB_SECRET_KEY']
 ALLOWED_HOSTS = ['*']
 ADMINS = [('hayatek', 'over35man@gmail.com')]
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'over35man@gmail.com'
+EMAIL_HOST_PASSWORD =os.environ['PASS']
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+SERVER_EMAIL = EMAIL_HOST_USER
 
 # Activate Django-Heroku.
 #django_heroku.settings(locals())
