@@ -10,6 +10,7 @@ DEBUG = False
 SECRET_KEY=os.environ['SECRET_KEY']
 GITHUB_SECRET_KEY=os.environ['GITHUB_SECRET_KEY']
 ALLOWED_HOSTS = ['*']
+ADMINS = [('hayatek', 'over35man@gmail.com')]
 
 # Activate Django-Heroku.
 #django_heroku.settings(locals())
@@ -19,5 +20,4 @@ db_from_env = dj_database_url.config(conn_max_age=400)
 DATABASES['default'].update(db_from_env)
 
 #Whitenoise settings
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
