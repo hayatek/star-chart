@@ -1,15 +1,16 @@
 import os
 from .base_settings import *
-#import django_heroku
 import dj_database_url
 
 
 DEBUG = False
-#PRODUCTION = True
+ALLOWED_HOSTS = ['*']
 
+#secret key settings
 SECRET_KEY = os.environ['SECRET_KEY']
 GITHUB_SECRET_KEY = os.environ['GITHUB_SECRET_KEY']
-ALLOWED_HOSTS = ['*']
+
+#e-mail settings
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.environ['EMAIL_ADDRESS']
 EMAIL_HOST_PASSWORD = os.environ['PASS']
@@ -17,8 +18,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 SERVER_EMAIL = EMAIL_HOST_USER
 
-# Activate Django-Heroku.
-#django_heroku.settings(locals())
+#https settings
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # update db settings
 db_from_env = dj_database_url.config(conn_max_age=400)
