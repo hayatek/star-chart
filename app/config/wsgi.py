@@ -8,7 +8,6 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 """
 
 import os
-from botocore.exceptions import ClientError
 from django.core.wsgi import get_wsgi_application
 import threading
 import requests
@@ -22,7 +21,7 @@ def server_awake():
     while True:
         try:
             requests.get("https://django-starchart.herokuapp.com//")
-        except ClientError as e:
+        except Exception as e:
             print(e)
         time.sleep(1200)
 
