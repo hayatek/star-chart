@@ -45,3 +45,9 @@ DATABASES['default'].update(db_from_env)
 
 #Whitenoise settings
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# Celery config
+BROKER_URL = os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_IMPORTS = ('core.tasks')
