@@ -19,21 +19,5 @@ services:
                 python manage.py runserver 0.0.0.0:8000"
         depends_on:
             - db
-    celery:
-        build: .
-        command: celery worker -A config.celery -l INFO
-        volumes:
-            - ./app:/app
-        depends_on:
-            - app
-            - db
-    celery-beat:
-        build: .
-        command: celery -A config beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler --pidfile=
-        volumes:
-            - ./app:/app
-        depends_on:
-            - app
-            - db
 volumes:
   postgres_data:
