@@ -15,7 +15,7 @@ GITHUB_SECRET_KEY = os.environ['GITHUB_SECRET_KEY']
 ADMINS = [('hayatek', 'over35man@gmail.com')]
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.environ['EMAIL_ADDRESS']
-EMAIL_HOST_PASSWORD = os.environ['PASS']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASS']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 SERVER_EMAIL = EMAIL_HOST_USER
@@ -49,7 +49,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Celery config
 djcelery.setup_loader()
-BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+BROKER_URL = os.environ.('CLOUDAMQP_URL')
 BROKER_POOL_LIMIT = 1
 BROKER_CONNECTION_MAX_RETRIES = None
 
@@ -57,5 +57,5 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-if BROKER_URL == "django://":
-    INSTALLED_APPS += ("kombu.transport.django",)
+#if BROKER_URL == "django://":
+#    INSTALLED_APPS += ("kombu.transport.django",)
