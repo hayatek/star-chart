@@ -49,7 +49,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Celery config
 djcelery.setup_loader()
-BROKER_URL = os.environ.('CLOUDAMQP_URL')
+BROKER_URL = os.environ['CLOUDAMQP_URL']
 BROKER_POOL_LIMIT = 1
 BROKER_CONNECTION_MAX_RETRIES = None
 
