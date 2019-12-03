@@ -34,9 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'chart',
-    'djcelery',
-#    'django_celery_beat',
-#    'django_celery_results',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -137,10 +136,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 #Local  Celery config
-#CELERY_RESULT_BACKEND = 'django-db'
-#CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
 #CELERY_BROKER_URL = 'redis://redis:6379'
-#CELERY_IMPORTS = ('core.tasks')
+CELERY_IMPORTS = ('core.tasks')
 #CELERY_RESULT_BACKEND = 'redis://redis:6379'
 '''
 CELERY_BEAT_SCHEDULE = {
