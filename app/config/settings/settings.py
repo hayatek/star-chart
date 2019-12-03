@@ -48,13 +48,13 @@ DATABASES['default'].update(db_from_env)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Celery config
-djcelery.setup_loader()
+#djcelery.setup_loader()
 BROKER_URL = os.environ['CLOUDAMQP_URL']
 BROKER_POOL_LIMIT = 1
 BROKER_CONNECTION_MAX_RETRIES = None
 
-CELERY_TASK_SERIALIZER = "json"
-CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
+#CELERY_TASK_SERIALIZER = "json"
+#CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 #if BROKER_URL == "django://":

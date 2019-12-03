@@ -14,7 +14,7 @@ import requests
 import time
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.settings')
 application = get_wsgi_application()
 
 def server_awake():
