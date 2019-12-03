@@ -1,7 +1,7 @@
 import os
 from .base_settings import *
 import dj_database_url
-import djcelery
+#import djcelery
 
 
 DEBUG = False
