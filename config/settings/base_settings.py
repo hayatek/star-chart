@@ -145,6 +145,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 CELERY_BEAT_SCHEDULE = {
     'update_database': {
         'task': 'core.tasks.update_database',
-        'schedule': crontab(minute=10, hour=13)
+        'schedule': crontab(minute=18, hour=4)
     }
 }
