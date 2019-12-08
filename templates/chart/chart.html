@@ -30,6 +30,7 @@
                         var index = 0;
                         {% for field in merged_query %}
                             {% for child_field in field %}
+                                //lineLabels to get from only one index of monthly_date, not from every index
                                 if (index === 0) {
                                     lineLabels.push("{{ child_field.monthly_date }}");
                                 }
@@ -44,14 +45,14 @@
                         }
                         //if it's 1st day of the month, below logic needed to
                         //skip otherwise 1st day will be duplicated in linechart.
-                        if ({{ dict.0.fetched_at.day }} != 1) {
-                            lineLabels.push("{{ dict.0.fetched_at.date }}");
-                            lineData1.push({{ dict.0.star_count }});
-                            lineData2.push({{ dict.1.star_count }});
-                            if (barNameOwner) {
-                                lineData3.push({{ dict.2.star_count }});
-                            }
-                        }
+                        //if ({{ dict.0.fetched_at.day }} != 1) {
+                        //    lineLabels.push("{{ dict.0.fetched_at.date }}");
+                        //    lineData1.push({{ dict.0.star_count }});
+                        //    lineData2.push({{ dict.1.star_count }});
+                        //    if (barNameOwner) {
+                        //        lineData3.push({{ dict.2.star_count }});
+                        //    }
+                        //}
                     </script>
                     <script src="{% static "chart/js/chartconfig.js" %}"></script>
                 </div>
@@ -61,10 +62,6 @@
             <div class="card">
                 <div class="card-body">
                     <h5>{% trans "GitHubのスター数 (Monthly)" %}</h5>
-                    <div class="lastupdate">
-                        <i class="material-icons calendar">calendar_today</i>
-                        <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i" }}</p>
-                    </div>
                     <canvas id="lineChart"></canvas>
                 </div>
             </div>
