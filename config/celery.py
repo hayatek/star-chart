@@ -6,7 +6,7 @@ from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.settings')
 
-app = Celery('config')
+app = Celery('config', broker=settings.BROKER_URL, backend=settings.CELERY_RESULT_BACKEND)
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 #app.autodiscover_tasks(settings.INSTALLED_APPS)
