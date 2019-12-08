@@ -49,13 +49,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Celery config
 #djcelery.setup_loader()
-BROKER_URL = os.environ['CLOUDAMQP_URL']
+BROKER_URL = os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = os.environ["REDIS_URL"]
 BROKER_POOL_LIMIT = 1
 BROKER_CONNECTION_MAX_RETRIES = None
 
 #CELERY_TASK_SERIALIZER = "json"
 #CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+#CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 #if BROKER_URL == "django://":
 #    INSTALLED_APPS += ("kombu.transport.django",)
