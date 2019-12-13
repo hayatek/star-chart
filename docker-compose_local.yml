@@ -43,8 +43,8 @@ services:
             - redis
     celery-beat:
         build: .
-        #command: celery -A config beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler --pidfile=
-        command: celery -A config beat -l INFO --pidfile=
+        command: celery -A config beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler --pidfile=
+        #command: celery -A config beat -l INFO --pidfile=
         environment:
             - DB_HOST=db
             - DB_NAME=app
