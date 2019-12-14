@@ -22,15 +22,15 @@ INSTALLED_APPS = [
 ]
 
 #Local  Celery config for django-celery-beat
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_CACHE_BACKEND = 'django-cache'
-BROKER_URL = 'redis://redis:6379'
+#CELERY_RESULT_BACKEND = 'django-db'
+#CELERY_CACHE_BACKEND = 'django-cache'
+#BROKER_URL = 'redis://redis:6379'
 CELERY_IMPORTS = ('core.tasks')
 
 #Local  Celery config for celery beat
-#CELERY_BROKER_URL = 'redis://redis:6379'
-#CELERY_RESULT_BACKEND = 'redis://redis:6379'
+BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
 
-FIXTURE_DIRS = (
-   os.path.join(BASE_DIR, 'fixtures'),
-)
+#FIXTURE_DIRS = (
+#   os.path.join(BASE_DIR, 'fixtures'),
+#)
