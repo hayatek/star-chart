@@ -83,7 +83,7 @@
             {% elif LANGUAGE_CODE == 'ja' %}
             <a class="nav-link" href="{% url 'core:about_ja_view' %}">About</a>
             <span>|</span>
-            <a class="nav-link" href="{% url 'core:terms_ja_view' %}">利用規約</a>
+            <a class="nav-link" href="{% url 'core:terms_ja_view' %}">利用規約{{GOOGLE_ANALYTICS_KEY}}</a>
             {% endif %}
         </div>
     </div>
