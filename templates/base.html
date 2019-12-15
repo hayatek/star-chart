@@ -27,11 +27,6 @@
           gtag('config', {{GOOGLE_ANALYTICS_KEY}});
         </script>
     {% endif %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-50945410-2"></script>
-
-
-
   </head>
   <body>
       <!-- Navbar -->
@@ -83,7 +78,7 @@
             {% elif LANGUAGE_CODE == 'ja' %}
             <a class="nav-link" href="{% url 'core:about_ja_view' %}">About</a>
             <span>|</span>
-            <a class="nav-link" href="{% url 'core:terms_ja_view' %}">利用規約{{GOOGLE_ANALYTICS_KEY}}</a>
+            <a class="nav-link" href="{% url 'core:terms_ja_view' %}">利用規約</a>
             {% endif %}
         </div>
     </div>
