@@ -38,6 +38,25 @@ LOGGING = {
     },
 }
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'config.settings.context_processors.get_tracking_id',
+            ],
+        },
+    },
+]
+
+GOOGLE_ANALYTICS_KEY = os.environ['GOOGLE_ANALYTICS_KEY']
+
 # db settings
 db_from_env = dj_database_url.config(conn_max_age=400)
 DATABASES['default'].update(db_from_env)
@@ -54,6 +73,6 @@ CELERY_IMPORTS = ('core.tasks')
 CELERY_BEAT_SCHEDULE = {
     'update_database': {
         'task': 'core.tasks.update_database',
-        'schedule': crontab(minute=0, hour=15) #must be UTC(JST-9h) 
+        'schedule': crontab(minute=0, hour=15) #must be UTC(JST-9h)
     }
 }
