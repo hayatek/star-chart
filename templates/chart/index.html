@@ -25,7 +25,7 @@
         <h4 class="font-weight-light">{% trans "TOP1000 GitHubリポジトリのスター数を比較してみよう。" %}</h4>
         <div class="lastupdate">
             <i class="material-icons calendar">calendar_today</i>
-            <p>Last Update: {{ last_fetched_date|date:"Y-m-d H:i" }}</p>
+            <p>Last Update: {{ last_fetched_date|date:"Y-m-d H:i T" }}</p>
         </div>
         <div class="d-flex justify-content-center align-items-center">
           <div class="row">
@@ -63,7 +63,7 @@
                 <div class="tab-header">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                          <a href="#tab1" class="nav-link active" data-toggle="tab">{% trans "最近の検索" %}</a>
+                          <a href="#tab1" class="nav-link active" data-toggle="tab">{% trans "最近の比較" %}</a>
                         </li>
                         <li class="nav-item">
                           <a href="#tab2" class="nav-link" data-toggle="tab">{% trans "アクセスランキング" %}</a>

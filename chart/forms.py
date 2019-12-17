@@ -10,7 +10,7 @@ class PostForm(forms.Form):
         label=_('リポジトリ(1)*'), max_length=40,required=True,
         initial='',
         error_messages={'required': _('必須入力項目です。')},
-        help_text=_('例) django or django/django'),
+        help_text=_('例) django/django (あいまい検索可)'),
         widget=forms.TextInput(attrs={'size': '10'}),
         validators=[validators.MinLengthValidator(2)])
 
@@ -18,11 +18,11 @@ class PostForm(forms.Form):
         label=_('リポジトリ(2)*'), max_length=40,required=True,
         initial='',
         error_messages={'required': _('必須入力項目です。')},
-        help_text=_('例) flask or pallets/flask'))
+        help_text=_('例) pallets/flask (あいまい検索可)'))
     repository_3 = forms.CharField(
         label=_('リポジトリ(3)'), max_length=40,required=False,
         initial='',
-        help_text=_('例) rails or rails/rails'))
+        help_text=_('例) rails/rails (あいまい検索可)'))
 
 
     def clean_repository_1(self):

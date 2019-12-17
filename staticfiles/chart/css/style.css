@@ -26,6 +26,7 @@ ul.navbar-nav li{
   height: calc(100vh - 55px);
   width: 100%;
   min-width:  100px;
+  min-height: 500px;
   color:#fff;
 }
 
@@ -35,17 +36,20 @@ ul.navbar-nav li{
 }
 
 .lang form{
-    width: 280px;
+    width: 200px;
+    background: green;
     display: flex;
     justify-content: center;
 }
 
 .lang input{
+    background: yellow;
     margin-left: 10px;
 }
 
 .lang select {
     width: 160px;
+    background: blue;
     cursor: pointer;
     text-overflow: ellipsis;
     -webkit-appearance: none;
@@ -124,7 +128,6 @@ ul.navbar-nav li{
     background-color: #EF9A9A !important;
 }
 
-
 .btn-secondary, .btn-secondary:hover, .btn-secondary:visited {
     background-color: #ABA59B !important;
     border: none;
@@ -152,7 +155,11 @@ ul.navbar-nav li{
 }
 
 .about-container .container p{
-    font-size: 1.1em;
+    font-size: 1em;
+}
+
+.about-container .container a{
+    color: #fff;
 }
 
 .term-container{
@@ -210,6 +217,7 @@ ul.navbar-nav li{
     justify-content: center;
     display: flex;
     height: 8vh;
+    min-height: 50px;
 }
 
 .git-btn-group .card-footer p{
@@ -264,12 +272,12 @@ ul.navbar-nav li{
 }
 
 .btn-info, .btn-info:hover, .btn-info:visited {
-    background-color: #00C348 !important;
+    background-color: #31B184 !important;
     border: none;
 }
 
 .btn-info:hover,.btn-info:active{
-    background-color: #81C784 !important;
+    background-color: #64D5A8 !important;
 }
 
 a.anchor{
@@ -280,7 +288,7 @@ a.anchor{
 
 /* ---------ranking ---------*/
 .ranking{
-    background: #C2F39F;
+    background: #B3F2CD;
     padding-top:50px;
 }
 

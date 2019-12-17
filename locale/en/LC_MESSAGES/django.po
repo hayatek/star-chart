@@ -24,20 +24,20 @@ msgstr "Repository(1)*"
 msgid "必須入力項目です。"
 msgstr "This is a required input item."
 
-msgid "例) django or django/django"
-msgstr "e.g. django or django/django"
+msgid "例) django/django (あいまい検索可)"
+msgstr "e.g. django/django or fuzzy search"
 
 msgid "リポジトリ(2)*"
 msgstr "Repository(2)*"
 
-msgid "例) flask or pallets/flask"
-msgstr "e.g. flask or pallets/flask"
+msgid "例) pallets/flask (あいまい検索可)"
+msgstr "e.g. pallets/flask or fuzzy search"
 
 msgid "リポジトリ(3)"
 msgstr "Repository(3)"
 
-msgid "例) rails or rails/rails"
-msgstr "e.g. rails or rails/rails"
+msgid "例) rails/rails (あいまい検索可)"
+msgstr "e.g. rails/rails or fuzzy search"
 
 msgid "リポジトリが存在しません。"
 msgstr "The repository doesn't exist."
@@ -69,8 +69,8 @@ msgstr "Compare the number of Top 1000 repository's stars on Github"
 msgid "スター数を比較する"
 msgstr "Compare"
 
-msgid "最近の検索"
-msgstr "Recently Accessed"
+msgid "最近の比較"
+msgstr "Recently compared"
 
 msgid "アクセスランキング"
 msgstr "Access Ranking"
