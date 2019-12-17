@@ -13,7 +13,12 @@
                     <h5>{% trans "GitHubのスター数 (Daily)" %}</h5>
                     <div class="lastupdate">
                         <i class="material-icons calendar">calendar_today</i>
-                        <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i" }}</p>
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% if LANGUAGE_CODE == 'en' %}
+                        <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i T" }}</p>
+                        {% elif LANGUAGE_CODE == 'ja' %}
+                        <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i T" }}</p>
+                        {% endif %}
                     </div>
                     <canvas id="barChart"></canvas>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -43,16 +48,6 @@
                             barDefaultData.push({{ dict.2.star_count }});
                             resource_path.push("{{ dict.2.resource_path }}");
                         }
-                        //if it's 1st day of the month, below logic needed to
-                        //skip otherwise 1st day will be duplicated in linechart.
-                        //if ({{ dict.0.fetched_at.day }} != 1) {
-                        //    lineLabels.push("{{ dict.0.fetched_at.date }}");
-                        //    lineData1.push({{ dict.0.star_count }});
-                        //    lineData2.push({{ dict.1.star_count }});
-                        //    if (barNameOwner) {
-                        //        lineData3.push({{ dict.2.star_count }});
-                        //    }
-                        //}
                     </script>
                     <script src="{% static "chart/js/chartconfig.js" %}"></script>
                 </div>
