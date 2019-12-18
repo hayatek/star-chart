@@ -37,19 +37,17 @@ ul.navbar-nav li{
 
 .lang form{
     width: 200px;
-    background: green;
     display: flex;
     justify-content: center;
 }
 
 .lang input{
-    background: yellow;
     margin-left: 10px;
 }
 
 .lang select {
     width: 160px;
-    background: blue;
+    background: #fff;
     cursor: pointer;
     text-overflow: ellipsis;
     -webkit-appearance: none;
