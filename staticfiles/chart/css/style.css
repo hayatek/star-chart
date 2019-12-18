@@ -33,8 +33,13 @@ ul.navbar-nav li{
     margin-left: 10px;
 }
 
+.lang i{
+    margin-top: 2px;
+    margin-right: 2px;
+}
+
 .lang form{
-    width: 200px;
+    width: 160px;
     display: flex;
     justify-content: center;
 }
@@ -140,6 +145,7 @@ ul.navbar-nav li{
 /* ---------about ---------*/
 .about-container{
     margin-top:100px;
+    margin-bottom:10px;
 }
 
 .about-container li{

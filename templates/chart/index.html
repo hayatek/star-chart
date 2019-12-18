@@ -7,6 +7,7 @@
 <header class="masthead">
     <div class="index-container">
         <div class="lang">
+            <i class="material-icons">language</i>
             <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <input name="next" type="hidden" value="{{ redirect_to }}">
                 <select name="language">
