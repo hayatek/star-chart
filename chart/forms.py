@@ -12,7 +12,7 @@ class PostForm(forms.Form):
         error_messages={'required': _('必須入力項目です。')},
         help_text=_('例) django/django or あいまい検索'),
         widget=forms.TextInput(attrs={'size': '10'}),
-        validators=[validators.MinLengthValidator(2)])
+        #validators=[validators.MinLengthValidator(2)])
 
     repository_2 = forms.CharField(
         label=_('リポジトリ(2)*'), max_length=40,required=True,

@@ -126,10 +126,9 @@ def chart_detail(request, pk):
 def get_database_id(repository_name):
     if Repository.objects.filter(name_owner=repository_name).exists():
         result = Repository.objects.filter(name_owner=repository_name)
-        return result
     else:
         result = Repository.objects.order_by('-star_count').filter(name_owner__icontains=repository_name)
-        return result
+    return result
 
 def get_repository_info(id_list):
     result_repository_info = []
