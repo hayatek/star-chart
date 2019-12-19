@@ -17,25 +17,9 @@ https://django-starchart.herokuapp.com/
 ## 本番環境
 - Heroku
 
-## アプリの構成
-├── chart
-├── config
-├── core
-├── locale
-├── staticfiles
-├── templates
-├── manage.py
-├── Dockerfile
-├── Procfile
-├── Procfile.real
-├── requirements.txt
-├── requirements_local.txt
-├── runtime.txt
-├── docker-compose.yml
-
-## 開発者について
-IT業界には長くいるもののずっとメインフレームコンピュータなどのレガシーな環境でCOBOLでの開発をやってきました。
-WebエンジニアへのJOBチェンジを目指して2018年11月よりPythonの学習を開始しました。
-
 ## 開発期間
 - 2019年4月〜12月の約9ヶ月(約400時間)
+
+## 開発者について
+IT業界での経験は10年以上、ずっとメインフレームコンピュータなどのレガシーな環境でCOBOLでの開発をやってきました。
+WebエンジニアへのJOBチェンジを目指して2018年11月よりPythonの学習を開始しました。
