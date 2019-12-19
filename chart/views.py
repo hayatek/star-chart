@@ -3,6 +3,7 @@ from .models import Combination
 from core.models import Repository, StarHistory
 from .forms import PostForm
 from django.utils import timezone
+from django.db.models import Max
 
 
 def chart_new(request):
@@ -15,18 +16,18 @@ def chart_new(request):
         if form.is_valid():
             id_list = []
 
-            id_list.append(get_database_id(
-                form.cleaned_data['repository_1'])[0].database_id)
+            print('レポ1引数=',form.cleaned_data['repository_1'])
+            print('レポ2引数=',form.cleaned_data['repository_2'])
+
+            id_list.append(get_database_id(form.cleaned_data['repository_1'])[0].database_id)
 
             if form.cleaned_data['repository_2']:
-                id_list.append(get_database_id(
-                    form.cleaned_data['repository_2'])[0].database_id)
+                id_list.append(get_database_id(form.cleaned_data['repository_2'])[0].database_id)
             else:
                 id_list.append(0)
 
             if form.cleaned_data['repository_3']:
-                id_list.append(get_database_id(
-                    form.cleaned_data['repository_3'])[0].database_id)
+                id_list.append(get_database_id(form.cleaned_data['repository_3'])[0].database_id)
             else:
                 id_list.append(0)
 
@@ -123,8 +124,12 @@ def chart_detail(request, pk):
                  'merged_query': merged_query})
 
 def get_database_id(repository_name):
-    result = Repository.objects.filter(name_owner__icontains=repository_name)
-    return result
+    if Repository.objects.filter(name_owner=repository_name).exists():
+        result = Repository.objects.filter(name_owner=repository_name)
+        return result
+    else:
+        result = Repository.objects.order_by('-star_count').filter(name_owner__icontains=repository_name)
+        return result
 
 def get_repository_info(id_list):
     result_repository_info = []
