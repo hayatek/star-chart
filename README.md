@@ -1,7 +1,6 @@
 # star-chart
 
-***
-English
+`English`
 
 It is a web application that obtains the number of stars of the GitHub repository input in the form via the GitHub API and compares it in a graph.
 Use Celery to get data once daily from Github and create daily graphs, and for monthly basis, create graphs that accumulate data of the first day of every month.
@@ -30,7 +29,7 @@ Started learning Python in November 2018 in order to change my jobs to web devel
 This is a first web app for me.
 
 ***
-Japanese
+`Japanese`
 
 ## このリポジトリについて
 フォームに入力されたGitHubリポジトリのスター数をGitHub APIより取得してグラフで比較するWebアプリです。
