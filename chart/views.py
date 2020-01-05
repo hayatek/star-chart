@@ -15,10 +15,6 @@ def chart_new(request):
         form = PostForm(request.POST)
         if form.is_valid():
             id_list = []
-
-            print('レポ1引数=',form.cleaned_data['repository_1'])
-            print('レポ2引数=',form.cleaned_data['repository_2'])
-
             id_list.append(get_database_id(form.cleaned_data['repository_1'])[0].database_id)
 
             if form.cleaned_data['repository_2']:
