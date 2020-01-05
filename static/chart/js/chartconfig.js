@@ -69,8 +69,14 @@ var lineChart = {
       },
       options: {
         legend: { display: false },
-        title: {
-          display: true,
+        title: { display: true },
+        scales: {
+         xAxes: [{
+            ticks: {
+               maxRotation: 30,
+               minRotation: 30,
+            }
+         }]
         }
       }
  }
