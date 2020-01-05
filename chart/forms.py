@@ -49,9 +49,12 @@ class PostForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(PostForm, self).clean()
-        repository_1 = cleaned_data.get("repository_1")
-        repository_2 = cleaned_data.get("repository_2")
-        repository_3 = cleaned_data.get("repository_3")
+        repository_1 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_1"))
+        repository_2 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_2"))
+        repository_3 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_3"))
+        #repository_1 = cleaned_data.get("repository_1")
+        #repository_2 = cleaned_data.get("repository_2")
+        #repository_3 = cleaned_data.get("repository_3")
 
         if repository_1 and repository_2:
             if repository_1 == repository_2:
