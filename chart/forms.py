@@ -49,12 +49,23 @@ class PostForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(PostForm, self).clean()
-        repository_1 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_1"))
-        repository_2 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_2"))
-        repository_3 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_3"))
-        #repository_1 = cleaned_data.get("repository_1")
-        #repository_2 = cleaned_data.get("repository_2")
-        #repository_3 = cleaned_data.get("repository_3")
+        if Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_1")).exists():
+            repository_1 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_1"))[0].name_owner
+        else:
+            repository_1 = ''
+
+        if Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_2")).exists():
+            repository_2 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_2"))[0].name_owner
+        else:
+            repository_2 = ''
+
+        if Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_3")).exists():
+            repository_3 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_3"))[0].name_owner
+        else:
+            repository_3 = ''
+        print("repository_1=", repository_1)
+        print("repository_2=", repository_2)
+        print("repository_3=", repository_3)
 
         if repository_1 and repository_2:
             if repository_1 == repository_2:

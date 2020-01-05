@@ -73,8 +73,8 @@ var lineChart = {
         scales: {
          xAxes: [{
             ticks: {
-               maxRotation: 90,
-               minRotation: 90,
+               maxRotation: 30,
+               minRotation: 30,
             }
          }]
         }
