@@ -1,34 +1,5 @@
 # star-chart
 
-`English`
-
-It is a web application that obtains the number of stars of the GitHub repository input in the form via the GitHub API and compares it in a graph.
-Use Celery to get data once daily from Github and create daily graphs, and for monthly basis, create graphs that accumulate data of the first day of every month.
-
-## Web
-https://django-starchart.herokuapp.com/
-
-## Technologies Used
-- Django
-- Bootstrap4
-- GraphQL
-- chart.js
-- Celery
-- Docker
-- CircleCi
-
-## Production Environment
-- Heroku
-
-## Development Period
-- 9 month (approx. 400hours)
-
-## About Developer
-I have more than 10 years of experience in the IT industry, but have been developing with COBOL in legacy environments such as mainframe computers.
-Started learning Python in November 2018 in order to change my jobs to web development.
-This is a first web app for me.
-
-***
 `Japanese`
 
 ## このリポジトリについて
@@ -56,3 +27,32 @@ https://django-starchart.herokuapp.com/
 ## 開発者について
 IT業界での経験は10年以上、ずっとメインフレームコンピュータなどのレガシーな環境でCOBOLでの開発をやってきました。
 WebエンジニアへのJOBチェンジを目指して2018年11月よりPythonの学習を開始しました。これが開発した最初のWebアプリです。
+
+***
+`English`
+
+It is a web application that obtains the number of stars of the GitHub repository input in the form via the GitHub API and compares it in a graph.
+Use Celery to get data once daily from Github and create daily graphs, and for monthly basis, create graphs that accumulate data of the first day of every month.
+
+## Web
+https://django-starchart.herokuapp.com/
+
+## Technologies Used
+- Django
+- Bootstrap4
+- GraphQL
+- chart.js
+- Celery
+- Docker
+- CircleCi
+
+## Production Environment
+- Heroku
+
+## Development Period
+- 9 month (approx. 400hours)
+
+## About Developer
+I have more than 10 years of experience in the IT industry, but have been developing with COBOL in legacy environments such as mainframe computers.
+Started learning Python in November 2018 in order to change my jobs to web development.
+This is a first web app for me.
