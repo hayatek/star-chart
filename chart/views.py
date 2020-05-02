@@ -110,7 +110,7 @@ def chart_detail(request, pk):
     for item in dict:
         if StarHistory.objects.select_related().filter(repository=item['id']).exists():
             history_date = StarHistory.objects.values('monthly_date').filter(repository=item['id'])
-            history_query = StarHistory.objects.values('monthly_date','star_count_monthly').filter(repository=item['id'])
+            history_query = StarHistory.objects.values('monthly_date','star_count_monthly').filter(repository=item['id']).order_by('monthly_date')
             merged_query.append(history_query)
 
     return render(request, 'chart/chart.html',
