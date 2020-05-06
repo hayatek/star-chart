@@ -12,13 +12,13 @@ class PostForm(forms.Form):
         error_messages={'required': _('必須入力項目です。')},
         help_text=_('例) django/django or あいまい検索'),
         widget=forms.TextInput(attrs={'size': '10'}))
-        #validators=[validators.MinLengthValidator(2)])
 
     repository_2 = forms.CharField(
         label=_('リポジトリ(2)*'), max_length=40,required=True,
         initial='',
         error_messages={'required': _('必須入力項目です。')},
         help_text=_('例) pallets/flask or あいまい検索'))
+
     repository_3 = forms.CharField(
         label=_('リポジトリ(3)'), max_length=40,required=False,
         initial='',
@@ -45,27 +45,29 @@ class PostForm(forms.Form):
                                         repository_name).exists():
             pass
         else:
-            raise forms.ValidationError(_('リポジトリが存在しません。'))
+            raise forms.ValidationError(_('リポジトリのデータが存在しません。'))
 
     def clean(self):
         cleaned_data = super(PostForm, self).clean()
-        if Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_1")).exists():
-            repository_1 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_1"))[0].name_owner
+
+        print('repository_1=',type(cleaned_data.get("repository_1")))
+        repository = cleaned_data.get("repository_1")
+        if repository:
+            repository_1 = self.get_repository_name(repository)
         else:
             repository_1 = ''
 
-        if Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_2")).exists():
-            repository_2 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_2"))[0].name_owner
+        repository = cleaned_data.get("repository_2")
+        if repository:
+            repository_2 = self.get_repository_name(repository)
         else:
             repository_2 = ''
 
-        if Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_3")).exists():
-            repository_3 = Repository.objects.order_by('-star_count').filter(name_owner__icontains=cleaned_data.get("repository_3"))[0].name_owner
+        repository = cleaned_data.get("repository_3")
+        if repository:
+            repository_3 = self.get_repository_name(repository)
         else:
             repository_3 = ''
-        print("repository_1=", repository_1)
-        print("repository_2=", repository_2)
-        print("repository_3=", repository_3)
 
         if repository_1 and repository_2:
             if repository_1 == repository_2:
@@ -83,3 +85,11 @@ class PostForm(forms.Form):
                 self._errors['repository_3'] = ErrorList([msg])
 
         return cleaned_data
+
+    def get_repository_name(self,repository):
+        if Repository.objects.order_by('-star_count').filter(name_owner__icontains=repository).exists():
+            repository_name = Repository.objects.order_by('-star_count').filter(name_owner__icontains=repository)[0].name_owner
+        else:
+            repository_name = ''
+
+        return repository_name
