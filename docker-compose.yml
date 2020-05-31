@@ -5,10 +5,6 @@ services:
         image: postgres:10-alpine
         volumes:
             - postgres_data:/var/lib/postgresql/data/
-        environment:
-            - POSTGRES_DB=app
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=supersecretpassword
         ports:
             - "5432:5432"
     app:
@@ -17,15 +13,9 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - ./:/app
+            - ./app:/app
         command: >
-         sh -c "python manage.py wait_for_db &&
-                python manage.py runserver 0.0.0.0:8000"
-        environment:
-            - DB_HOST=db
-            - DB_NAME=app
-            - DB_USER=postgres
-            - DB_PASS=supersecretpassword
+         sh -c "python manage.py wait_for_db
         depends_on:
             - db
 volumes:

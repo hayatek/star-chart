@@ -24,6 +24,7 @@ def update_database():
         has_next_page = json_result['data']['search']['pageInfo']['hasNextPage']
         after_value = json_result['data']['search']['pageInfo']['endCursor']
         df = pd.io.json.json_normalize(json_result['data']['search']['edges'])
+        del json_result
         #print('df.length=',len(df))
 
         for i in range(len(df)):
@@ -41,7 +42,7 @@ def update_database():
                                 df.at[i,'node.stargazers.totalCount']
                     repository_query.save()
                 except Exception as e:
-                    print('update_error',e)
+                    #print('update_error',e)
             else:
                 try:
                     #print('DB create!!')
@@ -55,12 +56,16 @@ def update_database():
                         language = df.at[i,'node.primaryLanguage.name'],
                         star_count = df.at[i,'node.stargazers.totalCount'])
                 except Exception as e:
-                    print('create_error',e)
+                    #print('create_error',e)
 
-            repository_updated = Repository.objects.get(
-                        database_id = df.at[i,'node.databaseId'])
+            del repository_query
 
-            if repository_updated.fetched_at.day == 1:
+            #if repository_updated.fetched_at.day == 31:
+            if datetime.datetime.now().day == 31:
+                if Repository.objects.filter(
+                                database_id=df.at[i,'node.databaseId']).exists():
+                    repository_updated = Repository.objects.get(
+                                database_id = df.at[i,'node.databaseId'])
                 try:
                     StarHistory.objects.create(
                         repository = repository_updated,
@@ -70,5 +75,7 @@ def update_database():
                                 datetime.timezone(datetime.timedelta(hours=9))))
                 except Exception as e:
                     print('history_create_error',e)
+
+            del repository_updated
             record_number = record_number + 1
             #print('record_number=',record_number)
