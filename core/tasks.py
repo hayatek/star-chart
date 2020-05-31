@@ -42,7 +42,7 @@ def update_database():
                                 df.at[i,'node.stargazers.totalCount']
                     repository_query.save()
                 except Exception as e:
-                    #print('update_error',e)
+                    print('update_error',e)
             else:
                 try:
                     #print('DB create!!')
@@ -56,7 +56,7 @@ def update_database():
                         language = df.at[i,'node.primaryLanguage.name'],
                         star_count = df.at[i,'node.stargazers.totalCount'])
                 except Exception as e:
-                    #print('create_error',e)
+                    print('create_error',e)
 
             del repository_query
 
