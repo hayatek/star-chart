@@ -73,8 +73,8 @@ CELERY_IMPORTS = ('core.tasks')
 CELERY_BEAT_SCHEDULE = {
     'update_database': {
         'task': 'core.tasks.update_database',
-        #'schedule': crontab(minute=3),
+        'schedule': crontab(minute=5),
         #'schedule': crontab(minute=0, hour=15) #must be UTC(JST-9h)
-        'schedule': crontab(minute=7, hour=22)
+        #'schedule': crontab(minute=0, hour=22)
     }
 }
