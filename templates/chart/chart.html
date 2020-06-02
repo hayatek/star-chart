@@ -37,7 +37,7 @@
                             {% for child_field in field %}
                                 //lineLabels to get from only one index of monthly_date, not from every index
                                 if (index === 0) {
-                                    lineLabels.push("{{ child_field.monthly_date }}");
+                                    lineLabels.push("{{ child_field.monthly_date|date:'Y-m' }}");
                                 }
                                 lineDataArray[index].push({{ child_field.star_count_monthly }});
                             {% endfor %}
