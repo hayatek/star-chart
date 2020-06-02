@@ -60,8 +60,7 @@ def update_database():
 
             del repository_query
 
-            #if repository_updated.fetched_at.day == 31:
-            if datetime.datetime.now().day == 2:
+            if datetime.datetime.now().day == 1:
                 if Repository.objects.filter(
                                 database_id=df.at[i,'node.databaseId']).exists():
                     repository_updated = Repository.objects.get(
