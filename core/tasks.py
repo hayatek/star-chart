@@ -41,6 +41,7 @@ def update_database():
                     repository_query.star_count = \
                                 df.at[i,'node.stargazers.totalCount']
                     repository_query.save()
+                    del repository_query
                 except Exception as e:
                     print('update_error',e)
             else:
@@ -58,9 +59,7 @@ def update_database():
                 except Exception as e:
                     print('create_error',e)
 
-            del repository_query
-
-            if datetime.datetime.now().day == 1:
+            if datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).day == 1:
                 if Repository.objects.filter(
                                 database_id=df.at[i,'node.databaseId']).exists():
                     repository_updated = Repository.objects.get(
@@ -72,9 +71,9 @@ def update_database():
                         star_count_monthly = repository_updated.star_count,
                         last_updated_at = datetime.datetime.now(
                                 datetime.timezone(datetime.timedelta(hours=9))))
+                    del repository_updated
                 except Exception as e:
                     print('history_create_error',e)
 
-            del repository_updated
             record_number = record_number + 1
             #print('record_number=',record_number)

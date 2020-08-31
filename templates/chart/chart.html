@@ -20,36 +20,38 @@
                         <p>Last Update:{{ last_fetched_date|date:"Y-m-d H:i T" }}</p>
                         {% endif %}
                     </div>
-                    <canvas id="barChart"></canvas>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-                    <script>
-                        var barLabels = ["{{ dict.0.name_owner }}","{{ dict.1.name_owner }}"];
-                        var barDefaultData = [{{ dict.0.star_count }},{{ dict.1.star_count }}];
-                        var resource_path = ["{{ dict.0.resource_path }}","{{ dict.1.resource_path }}"];
-                        var barNameOwner = "{{ dict.2.name_owner }}";
-                        var lineLabels = [];
-                        var lineData1 = [];
-                        var lineData2 = [];
-                        var lineData3 = [];
-                        var lineDataArray = [lineData1,lineData2,lineData3];
-                        var index = 0;
-                        {% for field in merged_query %}
-                            {% for child_field in field %}
-                                //lineLabels to get from only one index of monthly_date, not from every index
-                                if (index === 0) {
-                                    lineLabels.push("{{ child_field.monthly_date|date:'Y-m' }}");
-                                }
-                                lineDataArray[index].push({{ child_field.star_count_monthly }});
-                            {% endfor %}
-                            index ++;
-                        {% endfor %}
-                        if (barNameOwner) {
-                            barLabels.push("{{ dict.2.name_owner }}");
-                            barDefaultData.push({{ dict.2.star_count }});
-                            resource_path.push("{{ dict.2.resource_path }}");
-                        }
-                    </script>
-                    <script src="{% static "chart/js/chartconfig.js" %}"></script>
+                    <div class="canvas-container">
+                      <canvas id="barChart"></canvas>
+                      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                      <script>
+                          var barLabels = ["{{ dict.0.name_owner }}","{{ dict.1.name_owner }}"];
+                          var barDefaultData = [{{ dict.0.star_count }},{{ dict.1.star_count }}];
+                          var resource_path = ["{{ dict.0.resource_path }}","{{ dict.1.resource_path }}"];
+                          var barNameOwner = "{{ dict.2.name_owner }}";
+                          var lineLabels = [];
+                          var lineData1 = [];
+                          var lineData2 = [];
+                          var lineData3 = [];
+                          var lineDataArray = [lineData1,lineData2,lineData3];
+                          var index = 0;
+                          {% for field in merged_query %}
+                              {% for child_field in field %}
+                                  //lineLabels to get from only one index of monthly_date, not from every index
+                                  if (index === 0) {
+                                      lineLabels.push("{{ child_field.monthly_date|date:'Y-m' }}");
+                                  }
+                                  lineDataArray[index].push({{ child_field.star_count_monthly }});
+                              {% endfor %}
+                              index ++;
+                          {% endfor %}
+                          if (barNameOwner) {
+                              barLabels.push("{{ dict.2.name_owner }}");
+                              barDefaultData.push({{ dict.2.star_count }});
+                              resource_path.push("{{ dict.2.resource_path }}");
+                          }
+                      </script>
+                      <script src="{% static "chart/js/chartconfig.js" %}"></script>
+                    </div>
                 </div>
             </div>
         </div>
