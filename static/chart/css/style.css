@@ -411,6 +411,10 @@ img{
         margin-right: 10px;
     }
 
+    .barchart-container  .canvas-container{
+        margin-top: -20px;
+    }
+
     .linechart-container .card{
         height: 340px;
         width:  40vw;
