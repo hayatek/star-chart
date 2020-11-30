@@ -10,34 +10,31 @@ import json
 
 @shared_task
 def update_database():
-    #print('update_database!')
     graphql_obj = GetGraphql()
     first_value = 100
     after_value = None
     query_string = "stars:>10000"
     has_next_page = True
     record_number = 1
-    #print('GetGraphql finished!!!')
+    date_now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+    date_today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).date()
+    
     while (has_next_page) and (record_number <= 1000):
-        #print('has_next_page!!!')
         json_result = graphql_obj.get_result(first_value, after_value, query_string)
         has_next_page = json_result['data']['search']['pageInfo']['hasNextPage']
         after_value = json_result['data']['search']['pageInfo']['endCursor']
         df = pd.io.json.json_normalize(json_result['data']['search']['edges'])
         del json_result
-        #print('df.length=',len(df))
 
         for i in range(len(df)):
             if Repository.objects.filter(
                             database_id=df.at[i,'node.databaseId']).exists():
                 try:
-                    #print('DB update!!')
                     repository_query = Repository.objects.get(
                                 database_id = df.at[i,'node.databaseId'])
                     repository_query.updated_at_github = \
                                 df.at[i,'node.updatedAt']
-                    repository_query.fetched_at = datetime.datetime.now(
-                                datetime.timezone(datetime.timedelta(hours=9)))
+                    repository_query.fetched_at = date_now
                     repository_query.star_count = \
                                 df.at[i,'node.stargazers.totalCount']
                     repository_query.save()
@@ -46,7 +43,6 @@ def update_database():
                     print('update_error',e)
             else:
                 try:
-                    #print('DB create!!')
                     Repository.objects.create(
                         database_id = df.at[i,'node.databaseId'],
                         name_owner = df.at[i,'node.nameWithOwner'],
@@ -59,7 +55,7 @@ def update_database():
                 except Exception as e:
                     print('create_error',e)
 
-            if datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).day == 1:
+            if date_now.day == 1:
                 if Repository.objects.filter(
                                 database_id=df.at[i,'node.databaseId']).exists():
                     repository_updated = Repository.objects.get(
@@ -67,13 +63,11 @@ def update_database():
                 try:
                     StarHistory.objects.create(
                         repository = repository_updated,
-                        monthly_date = repository_updated.fetched_at.date(),
+                        monthly_date = date_today,
                         star_count_monthly = repository_updated.star_count,
-                        last_updated_at = datetime.datetime.now(
-                                datetime.timezone(datetime.timedelta(hours=9))))
+                        last_updated_at = date_now)
                     del repository_updated
                 except Exception as e:
                     print('history_create_error',e)
 
             record_number = record_number + 1
-            #print('record_number=',record_number)
