@@ -17,7 +17,7 @@ def update_database():
     has_next_page = True
     record_number = 1
     date_now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
-    date_today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).date()
+    date_today = date_now.date()
     
     while (has_next_page) and (record_number <= 1000):
         json_result = graphql_obj.get_result(first_value, after_value, query_string)
