@@ -6,6 +6,9 @@
 {% block content %}
 <header class="masthead">
     <div class="index-container">
+        <div class="forkongithub">
+            <i class="fab fa-github"></i><span><a href="https://github.com/hayatek/star-chart" target=”_blank”>Source Code</a></span>
+        </div>
         <div class="lang">
             <i class="material-icons">language</i>
             <form action="{% url 'set_language' %}" method="post">{% csrf_token %}

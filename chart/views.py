@@ -104,19 +104,17 @@ def chart_detail(request, pk):
     dict = sorted(repository_list,
                         key=lambda x:x['star_count'], reverse=True)
 
-    history_date = []
     history_query = []
     merged_query = []
+    max_count = 0
     for item in dict:
         if StarHistory.objects.select_related().filter(repository=item['id']).exists():
-            history_date = StarHistory.objects.values('monthly_date').filter(repository=item['id'])
-            history_query = StarHistory.objects.values('monthly_date','star_count_monthly').filter(repository=item['id']).order_by('monthly_date')
+            history_query = StarHistory.objects.values('repository','monthly_date','star_count_monthly').filter(repository=item['id']).order_by('monthly_date')
             merged_query.append(history_query)
 
     return render(request, 'chart/chart.html',
                 {'dict': dict,
                  'last_fetched_date' : last_fetched_date,
-                 'history_date' : history_date,
                  'merged_query': merged_query})
 
 def get_database_id(repository_name):

@@ -33,16 +33,32 @@
                           var lineData2 = [];
                           var lineData3 = [];
                           var lineDataArray = [lineData1,lineData2,lineData3];
-                          var index = 0;
+                          var repoIndex = 0;
+                          var baseIndex = 0;
+                          //e.g.
+                          //merged_query= [<QuerySet [{'repository': 70, 'monthly_date': datetime.date(2020, 8, 31),
+                          //{'repository': 70, 'monthly_date': datetime.date(2021, 8, 29), 'star_count_monthly': 59337}]>, 
+                          //<QuerySet [{'repository': 483, 'monthly_date': datetime.date(2021, 8, 29), 'star_count_monthly': 35291}]>]
                           {% for field in merged_query %}
                               {% for child_field in field %}
-                                  //lineLabels to get from only one index of monthly_date, not from every index
-                                  if (index === 0) {
+                                  //"lineLabels" stores the date of the first repository in the list.
+                                  if (repoIndex === 0) {
                                       lineLabels.push("{{ child_field.monthly_date|date:'Y-m' }}");
+                                      lineDataArray[repoIndex].push({{ child_field.star_count_monthly }});
+                                  } else {
+                                    //The history of each repository may have no data, so the number of stars for repositories with no data is set to '0'.
+                                    while (lineLabels[baseIndex] < "{{ child_field.monthly_date|date:'Y-m' }}"){
+                                        lineDataArray[repoIndex].push(0);
+                                        baseIndex ++;
+                                    }
+                                    if (lineLabels[baseIndex] === "{{ child_field.monthly_date|date:'Y-m' }}"){
+                                        lineDataArray[repoIndex].push({{ child_field.star_count_monthly }});
+                                    }
+                                    baseIndex ++;
                                   }
-                                  lineDataArray[index].push({{ child_field.star_count_monthly }});
                               {% endfor %}
-                              index ++;
+                              repoIndex ++;
+                              baseIndex = 0;
                           {% endfor %}
                           if (barNameOwner) {
                               barLabels.push("{{ dict.2.name_owner }}");
