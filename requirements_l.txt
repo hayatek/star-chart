@@ -1,7 +1,7 @@
-Django==2.2.8
+Django==3.2.7
 psycopg2==2.8.0
 flake8==3.7.9
-requests==2.21.0
+requests==2.26.0
 celery==5.0.0
 redis==3.3.0
 django-environ==0.4.5
